@@ -4,9 +4,9 @@
 $baseurl = 'https://eu02.alma.exlibrisgroup.com';
 $urlpath = '/view/sru/';
 
-$instid = $_GET["inst_id"] ?? "43ACC_NETWORK";
-//$acnum = $_GET["ac_num"] ?? "AC00877586";
-$acnum = $_GET["ac_num"] ?? "AC03271273";
+$nzid = "43ACC_NETWORK";
+$acnum = $_GET["ac_num"] ?? "AC00877586";
+//$acnum = $_GET["ac_num"] ?? "AC03271273";
 
 if (!preg_match('/^AC[0-9]{8}/i',$acnum))
     exit("Please provide a correct AC-Number.");
@@ -40,10 +40,10 @@ $records->appendChild($root);
 
 function call_sru($page_start) {
 
-    global $baseurl, $context, $instid, $urlparams, $urlpath;
+    global $baseurl, $context, $nzid, $urlparams, $urlpath;
 
     $urlparams['startRecord'] = $page_start;
-    $url = $baseurl.$urlpath.$instid."?".http_build_query($urlparams);
+    $url = $baseurl.$urlpath.$nzid."?".http_build_query($urlparams);
 
     $sru_xml = new DomDocument();
     $xml_string = file_get_contents($url, false, $context);
