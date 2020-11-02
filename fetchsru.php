@@ -1,5 +1,5 @@
 <?php
-/* Fetch data via SRU */
+/* Fetch data by "other_system_number" from OBV NZ via SRU */
 
 $baseurl = 'https://eu02.alma.exlibrisgroup.com';
 $urlpath = '/view/sru/';
