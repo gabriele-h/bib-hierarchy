@@ -46,6 +46,7 @@ function call_sru($page_start) {
     $url = $baseurl.$urlpath.$nzid."?".http_build_query($urlparams);
 
     $sru_xml = new DomDocument();
+    $sru_xml->preserveWhiteSpace = false;
     $xml_string = file_get_contents($url, false, $context);
 
     $sru_xml->loadXML($xml_string);
