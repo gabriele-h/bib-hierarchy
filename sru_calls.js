@@ -2,6 +2,7 @@ function buildHierarchy() {
 
     var acNum = document.getElementById("acnum").value;
     var instId = document.getElementById("alma_inst_id").value;
+    var namespace = "http://www.loc.gov/MARC21/slim";
 
     var records;
 
@@ -18,15 +19,14 @@ function buildHierarchy() {
 
     xhr.onload = function() {
         let sectionForCurrentAcNum = document.createElement("section");
-        sectionForCurrentAcNum.setAttribute("acnum", acNum);
-        let headingForTableText = "Hierarchie für " + acNum;
+        sectionForCurrentAcNum.setAttribute("id", acNum);
+        let headingForTableText = "Hierarchieanzeige ausgehend von " + acNum;
         let headingForTable = createElementByTagAndText("h2", headingForTableText);
         sectionForCurrentAcNum.append(headingForTable);
 
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
             var xmlObject = xhr.responseXML;
-            records = xmlObject.getElementsByTagNameNS("http://www.loc.gov/MARC21/slim", "record");
-            sectionForCurrentAcNum = createTable(records, sectionForCurrentAcNum);
+            sectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
         } else {
             errorP = createElementByTagAndText("p", "SRU call failed for " + acNum);
             sectionForCurrentAcNum.appendChild(errorP);
@@ -42,10 +42,6 @@ function buildHierarchy() {
         let textElement = document.createTextNode(elementText);
         element.appendChild(textElement);
         return element;
-    }
-
-    function getSorting(record) {
-        
     }
 
     function createTableHeading() {
@@ -73,18 +69,33 @@ function buildHierarchy() {
         return table;
     }
 
-    function createTable(recordList, sectionElement) {
+    function createTableContents(table, recordsXml) {
+        console.log("Creating table contents…");
+
+        numRecords = recordsXml.childNodes[0].childNodes.length;
+
+        for (let i = 0; i < numRecords; i ++) {
+
+            let currentRecord = recordsXml.children[0].children[i];
+
+            function nsResolver(prefix) {
+                return namespace;
+            }
+            let xpath = "default:leader/text()";
+            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            console.log(xpathResult.iterateNext());
+
+        }
+
+    }    
+
+    function createTable(recordsXml, sectionElement) {
         console.log("Creating table…");
 
-        if (recordList) {
+        if (recordsXml) {
 
             let table = createTableHeading();
-
-            console.log(RecordList);
-
-            for (record in recordList) {
-                numPart = getSorting(record);
-            }
+            createTableContents(table, recordsXml);
 
             sectionElement.append(table);
     
