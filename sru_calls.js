@@ -19,6 +19,7 @@ function buildHierarchy() {
     xhr.overrideMimeType('text/xml');
 
     xhr.onload = function() {
+        var modifiedSectionForCurrentAcNum;
         let sectionForCurrentAcNum = document.createElement("section");
         sectionForCurrentAcNum.setAttribute("id", acNum);
         let headingForTableText = "Ausgehend von " + acNum;
@@ -28,10 +29,10 @@ function buildHierarchy() {
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
             var xmlObject = xhr.responseXML;
             if ( checkNumberOfRecords(xmlObject) && checkNumberOfRecords(xmlObject) > 0 ) {
-                var modifiedSectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
+                modifiedSectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
             } else {
                 let errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
-                modifiedSectionForCurrentAcNum = sectionForCurrentAcNum.appendChild(errorP);
+                sectionForCurrentAcNum.appendChild(errorP);
             }
         } else {
             console.log("Error encountered on call of fetchsru.php");
@@ -40,8 +41,9 @@ function buildHierarchy() {
         }
 
         try {
-            document.body.appendChild(modifedSectionForCurrentAcNum);
-        } catch {
+            document.body.appendChild(modifiedSectionForCurrentAcNum);
+        } catch (error) {
+            console.log(error);
             console.log("Could not create table.");
         } finally {
             document.body.appendChild(sectionForCurrentAcNum);
