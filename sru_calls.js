@@ -1,5 +1,20 @@
 function buildHierarchy() {
 
+    let existingSection = document.getElementsByTagName("section");
+    console.log(existingSection);
+    try {
+        existingSection[0].remove();
+    } catch {}
+
+    var loaderIcon = document.createElement("div");
+    loaderIcon.setAttribute("id", "loader");
+    let loaderImage = document.createElement("img");
+    loaderImage.setAttribute("src", "spinner.svg");
+    loaderImage.setAttribute("alt", "Daten werden geladen. Bitte warten.");
+
+    loaderIcon.appendChild(loaderImage);
+    document.body.appendChild(loaderIcon);
+
     var acNum = document.getElementById("acnum").value;
     var instId = document.getElementById("alma_inst_id").value;
     var namespace = "http://www.loc.gov/MARC21/slim";
@@ -254,11 +269,15 @@ function buildHierarchy() {
             createTableContents(table, recordsXml);
 
             sectionElement.append(table);
+
+            loaderIcon.remove();
     
             return sectionElement;
 
         } else {
             console.log("Input for fetchsru.php did not lead to XML output.");
         }
+
+
     }
 }
