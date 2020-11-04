@@ -9,7 +9,7 @@ $acnum = $_GET["ac_num"];
 // $acnum = $_GET["ac_num"] ?? "AC00877586";
 //$acnum = $_GET["ac_num"] ?? "AC03271273";
 
-if (!preg_match('/^AC[0-9]{8}/i',$acnum))
+if (!preg_match('/^AC(?!00000000)[0-9]{8}/i',$acnum))
     exit("Please provide a correct AC-Number.");
 
 $querystring = urlencode('other_system_number='.$acnum);

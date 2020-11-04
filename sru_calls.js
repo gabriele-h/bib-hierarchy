@@ -27,11 +27,11 @@ function buildHierarchy() {
 
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
             var xmlObject = xhr.responseXML;
-            if (checkNumberOfRecords(xmlObject)) {
+            if ( checkNumberOfRecords(xmlObject) && checkNumberOfRecords(xmlObject) > 0 ) {
                 var modifiedSectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
-            } else if (checkNumberOfRecords(xmlObject) == 0) {
+            } else {
                 let errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
-                sectionForCurrentAcNum.appendChild(errorP);
+                modifiedSectionForCurrentAcNum = sectionForCurrentAcNum.appendChild(errorP);
             }
         } else {
             console.log("Error encountered on call of fetchsru.php");
