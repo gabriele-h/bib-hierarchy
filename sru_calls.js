@@ -1,5 +1,8 @@
 function buildHierarchy() {
 
+    var inputForm = document.getElementById("input-form");
+    inputForm.setAttribute("disabled", "disabled");
+
     let existingSection = document.getElementsByTagName("section");
     console.log(existingSection);
     try {
@@ -271,6 +274,7 @@ function buildHierarchy() {
             sectionElement.append(table);
 
             loaderIcon.remove();
+            inputForm.removeAttribute("disabled");
     
             return sectionElement;
 
