@@ -5,7 +5,8 @@ $baseurl = 'https://eu02.alma.exlibrisgroup.com';
 $urlpath = '/view/sru/';
 
 $nzid = "43ACC_NETWORK";
-$acnum = $_GET["ac_num"] ?? "AC00877586";
+$acnum = $_GET["ac_num"];
+// $acnum = $_GET["ac_num"] ?? "AC00877586";
 //$acnum = $_GET["ac_num"] ?? "AC03271273";
 
 if (!preg_match('/^AC[0-9]{8}/i',$acnum))
