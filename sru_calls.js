@@ -5,7 +5,7 @@ function buildHierarchy() {
     var namespace = "http://www.loc.gov/MARC21/slim";
 
     var records;
-    var sectionForCurrentAcNum;
+    var headingForTable;
 
     var params = new URLSearchParams({
         "ac_num": acNum
@@ -19,24 +19,46 @@ function buildHierarchy() {
     xhr.overrideMimeType('text/xml');
 
     xhr.onload = function() {
-        sectionForCurrentAcNum = document.createElement("section");
+        let sectionForCurrentAcNum = document.createElement("section");
         sectionForCurrentAcNum.setAttribute("id", acNum);
-        let headingForTableText = "Hierarchieanzeige ausgehend von " + acNum;
-        let headingForTable = createElementByTagAndText("h2", headingForTableText);
+        let headingForTableText = "Ausgehend von " + acNum;
+        headingForTable = createElementByTagAndText("h2", headingForTableText);
         sectionForCurrentAcNum.append(headingForTable);
 
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
             var xmlObject = xhr.responseXML;
-            sectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
+            if (checkNumberOfRecords(xmlObject)) {
+                var modifiedSectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
+            } else if (checkNumberOfRecords(xmlObject) == 0) {
+                let errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
+                sectionForCurrentAcNum.appendChild(errorP);
+            }
         } else {
-            errorP = createElementByTagAndText("p", "SRU call failed for " + acNum);
+            console.log("Error encountered on call of fetchsru.php");
+            let errorP = createElementByTagAndText("p", "SRU lieferte Fehler für " + acNum);
             sectionForCurrentAcNum.appendChild(errorP);
         }
 
-        document.body.appendChild(sectionForCurrentAcNum);
+        try {
+            document.body.appendChild(modifedSectionForCurrentAcNum);
+        } catch {
+            console.log("Could not create table.");
+        } finally {
+            document.body.appendChild(sectionForCurrentAcNum);
+        }
     };
 
     xhr.send();
+
+    function checkNumberOfRecords(recordsXml) {
+        try {
+            numRecords = recordsXml.childNodes[0].childNodes.length;
+        } catch {
+            numRecords = undefined;
+        } finally {
+            return numRecords;
+        }
+    }
 
     function createElementByTagAndText(elementTag, elementText) {
         let element = document.createElement(elementTag);
@@ -76,8 +98,9 @@ function buildHierarchy() {
         console.log("Creating table contents…");
 
         numRecords = recordsXml.childNodes[0].childNodes.length;
-        sectionAddition = " mit " + numRecords + " Teilen.";
-        sectionForCurrentAcNum.textContent += sectionAddition;
+        numDependentRecords = numRecords-1
+        sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen.";
+        headingForTable.textContent += sectionAddition;
 
         for (let i = 0; i < numRecords; i ++) {
 
@@ -156,7 +179,7 @@ function buildHierarchy() {
             return sectionElement;
 
         } else {
-            console.log("No records found?");
+            console.log("Input for fetchsru.php did not lead to XML output.");
         }
     }
 }
