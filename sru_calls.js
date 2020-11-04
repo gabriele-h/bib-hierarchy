@@ -5,6 +5,7 @@ function buildHierarchy() {
     var namespace = "http://www.loc.gov/MARC21/slim";
 
     var records;
+    var sectionForCurrentAcNum;
 
     var params = new URLSearchParams({
         "ac_num": acNum
@@ -18,7 +19,7 @@ function buildHierarchy() {
     xhr.overrideMimeType('text/xml');
 
     xhr.onload = function() {
-        let sectionForCurrentAcNum = document.createElement("section");
+        sectionForCurrentAcNum = document.createElement("section");
         sectionForCurrentAcNum.setAttribute("id", acNum);
         let headingForTableText = "Hierarchieanzeige ausgehend von " + acNum;
         let headingForTable = createElementByTagAndText("h2", headingForTableText);
@@ -45,6 +46,8 @@ function buildHierarchy() {
     }
 
     function createTableHeading() {
+        console.log("Creating table heading…");
+
         let table = document.createElement("table");
         let tableHead = document.createElement("thead");
         let tableHeadRow = document.createElement("tr");
@@ -73,18 +76,69 @@ function buildHierarchy() {
         console.log("Creating table contents…");
 
         numRecords = recordsXml.childNodes[0].childNodes.length;
+        sectionAddition = " mit " + numRecords + " Teilen.";
+        sectionForCurrentAcNum.textContent += sectionAddition;
 
         for (let i = 0; i < numRecords; i ++) {
+
+            console.log(i);
 
             let currentRecord = recordsXml.children[0].children[i];
 
             function nsResolver(prefix) {
                 return namespace;
             }
+
+            partOrder = extractPartOrder(recordsXml, currentRecord);
+            linkType = extractLinkType(recordsXml, currentRecord);
+            console.log(partOrder + ", " + linkType);
+
+        }
+
+        function extractPartOrder(recordsXml, currentRecord) {
+            // extract order of parts from 773 q or 830 v
+            let partOrder;
+            let xpath773 = 'default:datafield[@tag="773"]/default:subfield[@code="q"]/text()'
+            let xpath830 = 'default:datafield[@tag="830"]/default:subfield[@code="v"]/text()'
+            let xpath773Result = recordsXml.evaluate(xpath773, currentRecord, nsResolver);
+            let xpath830Result = recordsXml.evaluate(xpath830, currentRecord, nsResolver);
+
+            try {
+                partOrder = xpath773Result.iterateNext().wholeText;
+            } catch (error) {
+                // console.log(error);
+            }
+
+            try {
+                partOrder = xpath830Result.iterateNext().wholeText;
+            } catch (error) {
+                // console.log(error);
+            }
+
+            if (!partOrder) {
+                partOrder = '???';
+            }
+
+            return partOrder;
+
+        }
+
+        function extractLinkType(recordsXml, currentRecord) {
+            // extract link type from leader position 19
             let xpath = "default:leader/text()";
             let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
-            console.log(xpathResult.iterateNext());
+            let leader = xpathResult.iterateNext().wholeText;
+            let linkType = leader.substring(19, 20);
 
+            if (linkType == "c") {
+                return "TAT";
+            } else if (linkType == "b") {
+                return "TUT";
+            } else if (linkType == "a") {
+                return "MTM";
+            } else {
+                return "-";
+            }
         }
 
     }    
