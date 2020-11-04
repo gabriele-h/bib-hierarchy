@@ -109,6 +109,7 @@ function buildHierarchy() {
             console.log(i);
 
             let currentRecord = recordsXml.children[0].children[i];
+            let currentTr = document.createElement('tr');
 
             function nsResolver(prefix) {
                 return namespace;
@@ -116,8 +117,36 @@ function buildHierarchy() {
 
             partOrder = extractPartOrder(recordsXml, currentRecord);
             linkType = extractLinkType(recordsXml, currentRecord);
-            console.log(partOrder + ", " + linkType);
+            partTitle = extractPartTitle(recordsXml, currentRecord);
+            partYear = extractPartYear(recordsXml, currentRecord);
+            partEdition = "";
+            partId = extractPartId(recordsXml, currentRecord);
+            partHoldings = extractPartHoldings(recordsXml, currentRecord);
 
+            if (partId.substring(2) == acNum.substring(2)) {
+                continue
+            }
+
+            if (partHoldings) {
+                hasInstHoldings = "Ja";
+            } else {
+                hasInstHoldings = "Nein";
+            }
+
+            appendTableDataToRow(partOrder, currentTr);
+            appendTableDataToRow(linkType, currentTr);
+            appendTableDataToRow(partTitle, currentTr);
+            appendTableDataToRow(partYear, currentTr);
+            appendTableDataToRow(partEdition, currentTr);
+            appendTableDataToRow(partId, currentTr);
+            appendTableDataToRow(hasInstHoldings, currentTr);
+
+            table.appendChild(currentTr);
+        }
+
+        function appendTableDataToRow(tdText, tableRow) {
+            td = createElementByTagAndText('td', tdText);
+            tableRow.appendChild(td);
         }
 
         function extractPartOrder(recordsXml, currentRecord) {
@@ -141,7 +170,7 @@ function buildHierarchy() {
             }
 
             if (!partOrder) {
-                partOrder = '???';
+                partOrder = ''
             }
 
             return partOrder;
@@ -166,6 +195,54 @@ function buildHierarchy() {
             }
         }
 
+        function extractPartTitle(recordsXml, currentRecord) {
+            // extract the title of the current record
+            let xpath = 'default:datafield[@tag="245"]/default:subfield/text()';
+            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            subfields = [];
+            try {
+                while (subfield = xpathResult.iterateNext().wholeText) {
+                    subfields.push(subfield);
+                }
+            } catch {
+            }
+            return subfields.join(', ');
+        }
+
+        function extractPartYear(recordsXml, currentRecord) {
+            // extract the publication year of the current record
+            let xpath = 'default:controlfield[@tag="008"]/text()';
+            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            let marc008 = xpathResult.iterateNext().wholeText;
+            let year = marc008.substring(7,11);
+            return year;
+        }
+
+        function extractPartId(recordsXml, currentRecord) {
+            // extract AC-Number of the current record
+            let xpath = 'default:controlfield[@tag="009"]/text()';
+            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            let marc009 = xpathResult.iterateNext().wholeText;
+            return marc009;
+        }
+
+        function extractPartHoldings(recordsXml, currentRecord) {
+            // extract holdings info from marc 852
+            let xpath = 'default:datafield[@tag="852"]/default:subfield[@code="a"]/text()';
+            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            let hasInstHoldings = false;
+            try {
+                while ( marc852a = xpathResult.iterateNext().wholeText ) {
+                    console.log("'" + marc852a + "', '" + instId + "'");
+                    if (marc852a == instId) {
+                        hasInstHoldings = true;
+                    }
+                }
+            } catch {
+            }
+            return hasInstHoldings;
+        }
+            
     }    
 
     function createTable(recordsXml, sectionElement) {
