@@ -51,6 +51,8 @@ function buildHierarchy() {
             } else {
                 let errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
                 sectionForCurrentAcNum.appendChild(errorP);
+                loaderIcon.remove();
+                inputForm.removeAttribute("disabled");
             }
         } else {
             console.log("Error encountered on call of fetchsru.php");
@@ -281,7 +283,6 @@ function buildHierarchy() {
         } else {
             console.log("Input for fetchsru.php did not lead to XML output.");
         }
-
 
     }
 }
