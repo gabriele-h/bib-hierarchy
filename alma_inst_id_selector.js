@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "43ACC_UBK": "Universitätsbibliothek Klagenfurt",
         "43ACC_UBL": "Universitätsbibliothek Linz",
         "43ACC_UBMS": "Universitätsbibliothek Mozarteum Salzburg",
+        "43ACC_UBS": "Universitätsbibliothek Salzburg",
         "43ACC_VBK": "Verbund für Bildung und Kultur",
         "43ACC_VUW": "Veterinärmedizinische Universität Wien",
         "43ACC_WIENB": "Wienbibliothek im Rathaus",
