@@ -9,6 +9,10 @@ svg {
   height: 5em;
 }
 
+th {
+  cursor: pointer;
+}
+
 td, th {
   border: 1px solid #999;
   padding: 0.5rem;
@@ -28,11 +32,11 @@ td, th {
 }
 
 .ascending::after {
-  content: " \25BD";
+  content: " \25BC";
 }
 
 .descending::after {
-  content: " \25B3";
+  content: " \25B2";
 }
 
 .has-holdings td:last-child {
