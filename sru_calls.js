@@ -136,7 +136,7 @@ function buildHierarchy() {
             linkType = extractLinkType(recordsXml, currentRecord);
             partTitle = extractPartTitle(recordsXml, currentRecord);
             partYear = extractPartYear(recordsXml, currentRecord);
-            partEdition = "";
+            partEdition = extractPartEdition(recordsXml, currentRecord);
             partId = extractPartId(recordsXml, currentRecord);
             partHoldings = extractPartHoldings(recordsXml, currentRecord);
 
@@ -210,7 +210,7 @@ function buildHierarchy() {
             } else if (linkType == "a") {
                 return "MTM";
             } else {
-                return "-";
+                return "???";
             }
         }
 
@@ -235,6 +235,19 @@ function buildHierarchy() {
             let marc008 = xpathResult.iterateNext().wholeText;
             let year = marc008.substring(7,11);
             return year;
+        }
+
+        function extractPartEdition(recordsXml, currentRecord) {
+            // extract edition from MARC 250
+            let xpath = 'default:datafield[@tag="250"]/default:subfield/text()';
+            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            let marc250 = "";
+            try {
+                marc250 = xpathResult.iterateNext().wholeText;
+            } catch {
+            } finally {
+                return marc250;
+            }
         }
 
         function extractPartId(recordsXml, currentRecord) {
