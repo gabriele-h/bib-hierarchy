@@ -29,10 +29,8 @@ td, th {
 #loader {
   align-items: center;
   display: flex;
-  height: 100vh;
   justify-content: center;
   left: 0;
-  position: fixed;
   top: 0;
   transition: opacity 0.3s linear;
   width: 100%;
