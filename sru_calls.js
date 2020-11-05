@@ -161,6 +161,8 @@ function buildHierarchy() {
             if (partHoldings) {
                 hasInstHoldings = "Ja";
                 currentTr.setAttribute("class", "has-holdings");
+            } else if ( linkType == "MTM" ) {
+                hasInstHoldings = "";
             } else {
                 hasInstHoldings = "Nein";
                 currentTr.setAttribute("class", "has-no-holdings");
