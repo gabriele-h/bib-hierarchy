@@ -1,11 +1,12 @@
 /* Very basic styling to make content comprehensible */
 
-a {
-  color: #0000FF;
-}
-
 body {
   font-family: sans-serif;
+  margin: 1em 2em;
+}
+
+a {
+  color: #0000FF;
 }
 
 svg {
@@ -14,11 +15,17 @@ svg {
 }
 
 table {
-  max-width: 200em;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+     0px 5px 10px rgba(0,0,0,0.05),
+     0px 10px 10px rgba(0,0,0,0.05),
+     0px 15px 10px rgba(0,0,0,0.05);
+  max-width: 90vw;
+  margin: 0 auto;
 }
 
 th {
-  background: #BBF;
+  background: #001;
+  color: #EEF;
   cursor: pointer;
 }
 
