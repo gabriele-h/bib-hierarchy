@@ -8,6 +8,7 @@ function buildHierarchy() {
         existingSection[0].remove();
     } catch {}
 
+    // begin loader icon
     var loaderIcon = document.createElement("div");
     loaderIcon.setAttribute("id", "loader");
     let loaderImage = document.createElement("img");
@@ -16,6 +17,7 @@ function buildHierarchy() {
 
     loaderIcon.appendChild(loaderImage);
     document.body.appendChild(loaderIcon);
+    // end loader icon
 
     var acNum = document.getElementById("acnum").value;
     var instId = document.getElementById("alma_inst_id").value;
