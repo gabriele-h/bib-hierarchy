@@ -149,8 +149,10 @@ function buildHierarchy() {
 
             if (partHoldings) {
                 hasInstHoldings = "Ja";
+                currentTr.setAttribute("class", "has-holdings");
             } else {
                 hasInstHoldings = "Nein";
+                currentTr.setAttribute("class", "has-no-holdings");
             }
 
             appendTableDataToRow(partOrder, currentTr);

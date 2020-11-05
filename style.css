@@ -26,3 +26,11 @@ td, th {
   width: 100%;
   z-index: 9999;
 }
+
+.has-holdings {
+  background-color: #AFA;
+}
+
+.has-no-holdings {
+  background-color: #FAA;
+}
