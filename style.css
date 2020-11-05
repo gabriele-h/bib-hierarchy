@@ -13,13 +13,21 @@ svg {
   height: 5em;
 }
 
+table {
+  max-width: 200em;
+}
+
 th {
+  background: #BBF;
   cursor: pointer;
 }
 
 td, th {
-  border: 1px solid #999;
   padding: 0.5rem;
+}
+
+tbody tr:nth-child(even) {
+  background: #EEF;
 }
 
 #hilfe {
