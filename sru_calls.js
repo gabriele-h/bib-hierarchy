@@ -1,14 +1,16 @@
 function buildHierarchy() {
-
+    
+    // disable input after submit
     var inputForm = document.getElementById("input-form");
     inputForm.setAttribute("disabled", "disabled");
 
+    // remove data from prior function call
     let existingSection = document.getElementsByTagName("section");
     try {
         existingSection[0].remove();
     } catch {}
 
-    // begin loader icon
+    // add loader icon
     var loaderIcon = document.createElement("div");
     loaderIcon.setAttribute("id", "loader");
     let loaderImage = document.createElement("img");
@@ -17,14 +19,16 @@ function buildHierarchy() {
 
     loaderIcon.appendChild(loaderImage);
     document.body.appendChild(loaderIcon);
-    // end loader icon
 
+    // get avlues from form inputs
     var acNum = document.getElementById("acnum").value;
     var instId = document.getElementById("alma_inst_id").value;
     var namespace = "http://www.loc.gov/MARC21/slim";
 
-    var records;
+    // make vars global where necessary
     var headingForTable;
+    var numberOfRecords;
+    var records;
     var titleForHeadAcNum;
 
     var params = new URLSearchParams({
@@ -32,6 +36,7 @@ function buildHierarchy() {
     });
     var requestUrl = "./fetchsru.php?" + params;
 
+    // make sru requests
     var xhr = new XMLHttpRequest;
 
     xhr.open('GET', requestUrl);
@@ -48,7 +53,8 @@ function buildHierarchy() {
 
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
             var xmlObject = xhr.responseXML;
-            if ( checkNumberOfRecords(xmlObject) && checkNumberOfRecords(xmlObject) > 0 ) {
+            numberOfRecords = checkNumberOfRecords(xmlObject);
+            if ( numberOfRecords && numberOfRecords > 0 ) {
                 modifiedSectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
             } else {
                 let errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
@@ -119,8 +125,7 @@ function buildHierarchy() {
 
     function createTableContents(table, recordsXml) {
 
-        numRecords = recordsXml.childNodes[0].childNodes.length;
-        numDependentRecords = numRecords-1
+        numDependentRecords = numberOfRecords-1;
         sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen.";
         headingForTable.textContent += sectionAddition;
 
