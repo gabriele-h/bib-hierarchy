@@ -4,7 +4,6 @@ function buildHierarchy() {
     inputForm.setAttribute("disabled", "disabled");
 
     let existingSection = document.getElementsByTagName("section");
-    console.log(existingSection);
     try {
         existingSection[0].remove();
     } catch {}
@@ -90,7 +89,6 @@ function buildHierarchy() {
     }
 
     function createTableHeading() {
-        console.log("Creating table heading…");
 
         let table = document.createElement("table");
         let tableHead = document.createElement("thead");
@@ -117,7 +115,6 @@ function buildHierarchy() {
     }
 
     function createTableContents(table, recordsXml) {
-        console.log("Creating table contents…");
 
         numRecords = recordsXml.childNodes[0].childNodes.length;
         numDependentRecords = numRecords-1
@@ -126,7 +123,7 @@ function buildHierarchy() {
 
         for (let i = 0; i < numRecords; i ++) {
 
-            console.log(i);
+            //console.log(i);
 
             let currentRecord = recordsXml.children[0].children[i];
             let currentTr = document.createElement('tr');
@@ -255,7 +252,6 @@ function buildHierarchy() {
             let hasInstHoldings = false;
             try {
                 while ( marc852a = xpathResult.iterateNext().wholeText ) {
-                    console.log("'" + marc852a + "', '" + instId + "'");
                     if (marc852a == instId) {
                         hasInstHoldings = true;
                     }
