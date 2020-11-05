@@ -25,6 +25,7 @@ function buildHierarchy() {
 
     var records;
     var headingForTable;
+    var titleForHeadAcNum;
 
     var params = new URLSearchParams({
         "ac_num": acNum
@@ -143,7 +144,9 @@ function buildHierarchy() {
             partHoldings = extractPartHoldings(recordsXml, currentRecord);
 
             if (partId.substring(2) == acNum.substring(2)) {
-                continue
+                titleForHeadAcNum = createElementByTagAndText("p", partTitle);
+                titleForHeadAcNum.setAttribute("id", "title-" + acNum);
+                continue;
             }
 
             if (partHoldings) {
@@ -286,6 +289,8 @@ function buildHierarchy() {
             let table = createTableHeading();
             createTableContents(table, recordsXml);
 
+            sectionElement.append(titleForHeadAcNum);
+            console.log(titleForHeadAcNum);
             sectionElement.append(table);
 
             loaderIcon.remove();
