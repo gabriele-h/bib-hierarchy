@@ -27,6 +27,14 @@ td, th {
   z-index: 9999;
 }
 
+.ascending::after {
+  content: " \25BD";
+}
+
+.descending::after {
+  content: " \25B3";
+}
+
 .has-holdings {
   background-color: #AFA;
 }

@@ -327,6 +327,10 @@ function buildHierarchy() {
              Array.from(tbody.querySelectorAll('tr'))
                  .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
                  .forEach(tr => tbody.appendChild(tr) );
+             // set class for asc/desc marker
+             allTh = th.parentNode.children;
+             for (let i = 0; i < allTh.length; i ++) { allTh[i].setAttribute("class", ""); }
+             th.setAttribute("class", asc ? "ascending" : "descending");
          })));
     }
 
