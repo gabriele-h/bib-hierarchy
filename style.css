@@ -67,3 +67,7 @@ tbody tr:nth-child(even) {
 .has-no-holdings td:last-child {
   background-color: #FAA;
 }
+
+.title {
+  font-style: italic;
+}

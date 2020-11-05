@@ -156,8 +156,9 @@ function buildHierarchy() {
             partHoldings = extractPartHoldings(recordsXml, currentRecord);
 
             if (partId.substring(2) == acNum.substring(2)) {
-                titleForHeadAcNum = createElementByTagAndText("p", partTitle);
+                titleForHeadAcNum = createElementByTagAndText("p", '"' + partTitle + '"');
                 titleForHeadAcNum.setAttribute("id", "title-" + acNum);
+                titleForHeadAcNum.setAttribute("class", "title");
                 continue;
             }
 
