@@ -17,7 +17,7 @@
                 keySplines="0.3, 0.61, 0.355, 1"
                 repeatCount="indefinite" />
         </circle>
-        <circle cx="70" cy="70" r="1" stroke="#777777">
+        <circle cx="70" cy="70" r="1" stroke="#0000FF">
             <animate attributeName="r"
                 begin="-0.9s" dur="3s"
                 values="1; 70"
