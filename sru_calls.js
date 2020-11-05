@@ -4,20 +4,23 @@ function buildHierarchy() {
     var inputForm = document.getElementById("input-form");
     inputForm.setAttribute("disabled", "disabled");
 
-    // remove data from prior function call
+    // remove data from previous function call
     let existingSection = document.getElementsByTagName("section");
     try {
         existingSection[0].remove();
     } catch {}
 
-    // add loader icon
+    // add loader icon and text
+    let loaderString = "Daten werden geladen. Bitte warten.";
+    var loaderText = createElementByTagAndText("p", loaderString);
     var loaderIcon = document.createElement("div");
     loaderIcon.setAttribute("id", "loader");
     let loaderImage = document.createElement("img");
     loaderImage.setAttribute("src", "spinner.svg");
-    loaderImage.setAttribute("alt", "Daten werden geladen. Bitte warten.");
+    loaderImage.setAttribute("alt", "Ladeanimation");
 
     loaderIcon.appendChild(loaderImage);
+    document.body.appendChild(loaderText);
     document.body.appendChild(loaderIcon);
 
     // get avlues from form inputs
@@ -305,6 +308,7 @@ function buildHierarchy() {
             sectionElement.append(table);
 
             loaderIcon.remove();
+            loaderText.remove();
             inputForm.removeAttribute("disabled");
     
             return sectionElement;
