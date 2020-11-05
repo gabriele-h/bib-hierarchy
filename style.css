@@ -35,10 +35,10 @@ td, th {
   content: " \25B3";
 }
 
-.has-holdings {
+.has-holdings td:last-child {
   background-color: #AFA;
 }
 
-.has-no-holdings {
+.has-no-holdings td:last-child {
   background-color: #FAA;
 }
