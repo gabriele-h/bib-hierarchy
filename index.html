@@ -15,7 +15,7 @@
     <form onsubmit="buildHierarchy(acnum, alma_inst_id); return false;">
         <fieldset id="input-form">
             <label for="acnum">AC-Nummer des Kopfsatzes:</label>
-            <input id="acnum" name="acnum" required type="text" value="" pattern="[Aa][Cc](?!00000000)[0-9]{8}" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern. Haben Sie sich vertippt?')"></input>
+            <input id="acnum" name="acnum" required type="text" value="" pattern="[Aa][Cc](?!00000000)[0-9]{8}" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern. Sind Leerzeichen in der Eingabe enhalten oder haben Sie sich vertippt?')" onchange="this.setCustomValidity('')"></input>
             <select id="alma_inst_id" name="alma_inst_id">
                 
             </select>
