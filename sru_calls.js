@@ -290,7 +290,6 @@ function buildHierarchy() {
             createTableContents(table, recordsXml);
 
             sectionElement.append(titleForHeadAcNum);
-            console.log(titleForHeadAcNum);
             sectionElement.append(table);
 
             loaderIcon.remove();
