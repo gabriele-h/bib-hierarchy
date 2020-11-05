@@ -1,5 +1,9 @@
 /* Very basic styling to make content comprehensible */
 
+a {
+  color: #0000FF;
+}
+
 body {
   font-family: sans-serif;
 }
