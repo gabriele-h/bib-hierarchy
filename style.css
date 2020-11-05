@@ -18,6 +18,10 @@ td, th {
   padding: 0.5rem;
 }
 
+#hilfe {
+  display: none;
+}
+
 #loader {
   align-items: center;
   display: flex;
