@@ -124,6 +124,8 @@ function buildHierarchy() {
         sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen.";
         headingForTable.textContent += sectionAddition;
 
+        var tableBody = document.createElement("tbody");
+
         for (let i = 0; i < numRecords; i ++) {
 
             //console.log(i);
@@ -165,7 +167,8 @@ function buildHierarchy() {
             appendTableDataToRow(partId, currentTr);
             appendTableDataToRow(hasInstHoldings, currentTr);
 
-            table.appendChild(currentTr);
+            tableBody.appendChild(currentTr);
+            table.appendChild(tableBody);
         }
 
         function appendTableDataToRow(tdText, tableRow) {
@@ -302,4 +305,5 @@ function buildHierarchy() {
         }
 
     }
+
 }
