@@ -109,7 +109,7 @@ function buildHierarchy() {
         let tableHead = document.createElement("thead");
         let tableHeadRow = document.createElement("tr");
         let tableHeadings = [
-            "773 q bzw. 830 v",
+            "773$$q bzw. 830$$v",
             "Linktyp",
             "Titel des Teils",
             "Erscheinungsjahr",
