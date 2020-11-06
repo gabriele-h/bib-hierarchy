@@ -11,7 +11,7 @@ function buildHierarchy() {
     } catch {}
 
     // add loader icon and text
-    let loaderString = "Daten werden geladen. Bitte warten.";
+    let loaderString = "Daten werden geladen. Bitte warten - 1000 Datensätze brauchen ca. 50 Sekunden.";
     var loaderText = createElementByTagAndText("p", loaderString);
     var loaderIcon = document.createElement("div");
     loaderIcon.setAttribute("id", "loader");
@@ -63,6 +63,7 @@ function buildHierarchy() {
                 let errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
                 sectionForCurrentAcNum.appendChild(errorP);
                 loaderIcon.remove();
+                loaderText.remove();
                 inputForm.removeAttribute("disabled");
             }
         } else {
