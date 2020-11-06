@@ -269,16 +269,19 @@ function buildHierarchy() {
                 if ( linkType === "TAT" && ! ["a", "b", "c"].indexOf(subfieldKey) ) {
                     continue;
                 } else {
-                    if (subfieldKey === "b") {
-                        title += ' : ';
-                    } else if (subfieldKey === "c") {
-                        title += ' / ';
-                    } else if (subfieldKey === "n") {
-                        title += '. ';
-                    } else if (subfieldKey === "p") {
-                        title += ', ';
+                    if (title !== "") {
+                        if (subfieldKey === "b") {
+                            title += ' : ';
+                        } else if (subfieldKey === "c") {
+                            title += ' / ';
+                        } else if (subfieldKey === "n") {
+                            title += '. ';
+                        } else if (subfieldKey === "p") {
+                            title += ', ';
+                        }
                     }
                     title += subfieldValue;
+                    isFirstTitlePart = false;
                 }
             }
 
