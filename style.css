@@ -9,22 +9,40 @@ a {
   color: #0000FF;
 }
 
+fieldset {
+  border-color: #EEF;
+  border-radius: 0.5em;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.05),
+     0px 2px 5px rgba(0,0,0,0.02),
+     0px 5px 5px rgba(0,0,0,0.02),
+     0px 7px 5px rgba(0,0,0,0.02);
+}
+
+input {
+  margin: auto 0.5em;
+}
+
+input,
+select {
+  font-size: 1em;
+}
+
 svg {
   width: 5em;
   height: 5em;
 }
 
 table {
-  box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
-     0px 5px 10px rgba(0,0,0,0.05),
-     0px 10px 10px rgba(0,0,0,0.05),
-     0px 15px 10px rgba(0,0,0,0.05);
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.10),
+     0px 2px 5px rgba(0,0,0,0.05),
+     0px 5px 5px rgba(0,0,0,0.05),
+     0px 7px 5px rgba(0,0,0,0.05);
   max-width: 90vw;
   margin: 0 auto;
 }
 
 th {
-  background: #001;
+  background: #223;
   color: #EEF;
   cursor: pointer;
 }
@@ -52,6 +70,14 @@ tbody tr:nth-child(even) {
   transition: opacity 0.3s linear;
   width: 100%;
   z-index: 9999;
+}
+
+#submit {
+  background-color: #223;
+  border-color: #445;
+  border-radius: 0.5em;
+  color: #EEF;
+  padding: 0.5em 1em;
 }
 
 .ascending::after {
