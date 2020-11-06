@@ -1,3 +1,4 @@
+"use strict";
 function buildHierarchy() {
     
     // disable input after submit
@@ -88,6 +89,7 @@ function buildHierarchy() {
     xhr.send();
 
     function checkNumberOfRecords(recordsXml) {
+        let numRecords;
         try {
             numRecords = recordsXml.childNodes[0].childNodes.length;
         } catch {
@@ -132,13 +134,13 @@ function buildHierarchy() {
 
     function createTableContents(table, recordsXml) {
 
-        numDependentRecords = numberOfRecords-1;
-        sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen.";
+        const numDependentRecords = numberOfRecords-1;
+        const sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen.";
         headingForTable.textContent += sectionAddition;
 
         const tableBody = document.createElement("tbody");
 
-        for (let i = 0; i < numRecords; i ++) {
+        for (let i = 0; i < numberOfRecords; i ++) {
 
             //console.log(i);
 
@@ -149,13 +151,13 @@ function buildHierarchy() {
                 return namespace;
             }
 
-            const partOrder = extractPartOrder(recordsXml, currentRecord);
-            const linkType = extractLinkType(recordsXml, currentRecord);
-            const partTitle = extractPartTitle(recordsXml, currentRecord);
-            const partYear = extractPartYear(recordsXml, currentRecord);
-            const partEdition = extractPartEdition(recordsXml, currentRecord);
-            const partId = extractPartId(recordsXml, currentRecord);
-            const partHoldings = extractPartHoldings(recordsXml, currentRecord);
+            const partOrder = extractPartOrder(recordsXml, currentRecord, nsResolver);
+            const linkType = extractLinkType(recordsXml, currentRecord, nsResolver);
+            const partTitle = extractPartTitle(recordsXml, currentRecord, nsResolver);
+            const partYear = extractPartYear(recordsXml, currentRecord, nsResolver);
+            const partEdition = extractPartEdition(recordsXml, currentRecord, nsResolver);
+            const partId = extractPartId(recordsXml, currentRecord, nsResolver);
+            const partHoldings = extractPartHoldings(recordsXml, currentRecord, nsResolver);
 
             const isbdTitle = buildTitleFromSubfields(partTitle, linkType);
 
@@ -191,11 +193,11 @@ function buildHierarchy() {
         }
 
         function appendTableDataToRow(tdText, tableRow) {
-            td = createElementByTagAndText('td', tdText);
+            const td = createElementByTagAndText('td', tdText);
             tableRow.appendChild(td);
         }
 
-        function extractPartOrder(recordsXml, currentRecord) {
+        function extractPartOrder(recordsXml, currentRecord, nsResolver) {
             // extract order of parts from 773 q or 830 v
             let partOrder;
             const xpath773 = 'default:datafield[@tag="773"]/default:subfield[@code="q"]/text()'
@@ -223,7 +225,7 @@ function buildHierarchy() {
 
         }
 
-        function extractLinkType(recordsXml, currentRecord) {
+        function extractLinkType(recordsXml, currentRecord, nsResolver) {
             // extract link type from leader position 19
             const xpath = "default:leader/text()";
             const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
@@ -241,7 +243,7 @@ function buildHierarchy() {
             }
         }
 
-        function extractPartTitle(recordsXml, currentRecord) {
+        function extractPartTitle(recordsXml, currentRecord, nsResolver) {
             // extract the title of the current record
             
             const xpathText = 'default:datafield[@tag="245"]/default:subfield/text()';
@@ -284,14 +286,13 @@ function buildHierarchy() {
                         }
                     }
                     title += subfieldValue;
-                    isFirstTitlePart = false;
                 }
             }
 
             return title;
         }
 
-        function extractPartYear(recordsXml, currentRecord) {
+        function extractPartYear(recordsXml, currentRecord, nsResolver) {
             // extract the publication year of the current record
             const xpath = 'default:controlfield[@tag="008"]/text()';
             const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
@@ -300,11 +301,11 @@ function buildHierarchy() {
             return year;
         }
 
-        function extractPartEdition(recordsXml, currentRecord) {
+        function extractPartEdition(recordsXml, currentRecord, nsResolver) {
             // extract edition from MARC 250
             const xpath = 'default:datafield[@tag="250"]/default:subfield/text()';
             const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
-            const marc250 = "";
+            let marc250 = "";
             try {
                 marc250 = xpathResult.iterateNext().wholeText;
             } catch {
@@ -313,7 +314,7 @@ function buildHierarchy() {
             }
         }
 
-        function extractPartId(recordsXml, currentRecord) {
+        function extractPartId(recordsXml, currentRecord, nsResolver) {
             // extract AC-Number of the current record
             const xpath = 'default:controlfield[@tag="009"]/text()';
             const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
@@ -321,8 +322,9 @@ function buildHierarchy() {
             return marc009;
         }
 
-        function extractPartHoldings(recordsXml, currentRecord) {
+        function extractPartHoldings(recordsXml, currentRecord, nsResolver) {
             // extract holdings info from marc 852
+            let marc852a;
             const xpath = 'default:datafield[@tag="852"]/default:subfield[@code="a"]/text()';
             const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
             let hasInstHoldings = false;
@@ -364,6 +366,7 @@ function buildHierarchy() {
 
     function makeTableSortable() {
          // kudos https://stackoverflow.com/questions/14267781
+         let asc;
          const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.replace(',', '.').replace(/ .*$/, '') || tr.children[idx].textContent.replace(',', '.').replace(/ .*$/, '') : tr.children[idx].innerText || tr.children[idx].textContent;
          const comparer = (idx, asc) => (a, b) => ((v1, v2) => 
              v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
@@ -374,10 +377,10 @@ function buildHierarchy() {
              const table = th.closest('table');
              const tbody = table.querySelector('tbody');
              Array.from(tbody.querySelectorAll('tr'))
-                 .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+                 .sort(comparer(Array.from(th.parentNode.children).indexOf(th), asc = !asc))
                  .forEach(tr => tbody.appendChild(tr) );
              // set class for asc/desc marker
-             allTh = th.parentNode.children;
+             const allTh = th.parentNode.children;
              for (let i = 0; i < allTh.length; i ++) { allTh[i].setAttribute("class", ""); }
              th.setAttribute("class", asc ? "ascending" : "descending");
          })));
