@@ -266,20 +266,19 @@ function buildHierarchy() {
                 let subfield = subfields[i];
                 let subfieldKey = Object.keys(subfield)[0];
                 let subfieldValue = Object.values(subfield)[0];
-                let isLastSubfield = (i === subfields.length - 1);
                 if ( linkType === "TAT" && ! ["a", "b", "c"].indexOf(subfieldKey) ) {
                     continue;
                 } else {
-                    title += subfieldValue;
-                    if (subfieldKey === "b" && !isLastSubfield) {
+                    if (subfieldKey === "b") {
                         title += ' : ';
-                    } else if (subfieldKey === "c" && !isLastSubfield) {
+                    } else if (subfieldKey === "c") {
                         title += ' / ';
-                    } else if (subfieldKey === "n" && !isLastSubfield) {
+                    } else if (subfieldKey === "n") {
                         title += '. ';
-                    } else if (subfieldKey === "p" && !isLastSubfield) {
+                    } else if (subfieldKey === "p") {
                         title += ', ';
                     }
+                    title += subfieldValue;
                 }
             }
 
