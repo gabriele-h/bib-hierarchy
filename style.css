@@ -16,6 +16,7 @@ fieldset {
      0px 2px 5px rgba(0,0,0,0.02),
      0px 5px 5px rgba(0,0,0,0.02),
      0px 7px 5px rgba(0,0,0,0.02);
+  width: max-content;
 }
 
 input {
