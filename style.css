@@ -37,6 +37,9 @@ legend {
 legend a {
     color: #445;
     text-decoration: none;
+
+li {
+  line-height: 1.25rem;
 }
  
 svg {
