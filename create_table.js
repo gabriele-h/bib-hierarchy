@@ -1,22 +1,22 @@
 function buildHierarchy() {
     
     // disable input after submit
-    var inputForm = document.getElementById("input-form");
+    const inputForm = document.getElementById("input-form");
     inputForm.setAttribute("disabled", "disabled");
 
     // remove data from previous function call
-    let existingSection = document.getElementsByTagName("section");
+    const existingSection = document.getElementsByTagName("section");
     try {
         existingSection[0].remove();
     } catch {}
 
     // add loader icon and text
-    let loaderString = "Bitte warten. Ladezeit kann Sekunden bis Minuten betragen.";
-    var loaderText = createElementByTagAndText("p", loaderString);
+    const loaderString = "Bitte warten. Ladezeit kann Sekunden bis Minuten betragen.";
+    const loaderText = createElementByTagAndText("p", loaderString);
     loaderText.setAttribute("id", "loader-text");
-    var loaderIcon = document.createElement("div");
+    const loaderIcon = document.createElement("div");
     loaderIcon.setAttribute("id", "loader");
-    let loaderImage = document.createElement("img");
+    const loaderImage = document.createElement("img");
     loaderImage.setAttribute("src", "spinner.svg");
     loaderImage.setAttribute("alt", "Ladeanimation");
 
@@ -25,43 +25,43 @@ function buildHierarchy() {
     document.body.appendChild(loaderIcon);
 
     // get values from form inputs
-    var acNum = document.getElementById("acnum").value;
-    var instId = document.getElementById("alma_inst_id").value;
-    var namespace = "http://www.loc.gov/MARC21/slim";
+    const acNum = document.getElementById("acnum").value;
+    const instId = document.getElementById("alma_inst_id").value;
+    const namespace = "http://www.loc.gov/MARC21/slim";
 
     // make vars global where necessary
-    var headingForTable;
-    var numberOfRecords;
-    var records;
-    var titleForHeadAcNum;
+    let headingForTable;
+    let numberOfRecords;
+    let records;
+    let titleForHeadAcNum;
 
-    var params = new URLSearchParams({
+    const params = new URLSearchParams({
         "ac_num": acNum
     });
-    var requestUrl = "./fetchsru.php?" + params;
+    const requestUrl = "./fetchsru.php?" + params;
 
     // make sru requests
-    var xhr = new XMLHttpRequest;
+    const xhr = new XMLHttpRequest;
 
     xhr.open('GET', requestUrl);
     xhr.responseType = 'document';
     xhr.overrideMimeType('text/xml');
 
     xhr.onload = function() {
-        var modifiedSectionForCurrentAcNum;
-        let sectionForCurrentAcNum = document.createElement("section");
+        let modifiedSectionForCurrentAcNum;
+        const sectionForCurrentAcNum = document.createElement("section");
         sectionForCurrentAcNum.setAttribute("id", acNum);
-        let headingForTableText = "Ausgehend von " + acNum;
+        const headingForTableText = "Ausgehend von " + acNum;
         headingForTable = createElementByTagAndText("h2", headingForTableText);
         sectionForCurrentAcNum.append(headingForTable);
 
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
-            var xmlObject = xhr.responseXML;
+            const xmlObject = xhr.responseXML;
             numberOfRecords = checkNumberOfRecords(xmlObject);
             if ( numberOfRecords && numberOfRecords > 0 ) {
                 modifiedSectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
             } else {
-                let errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
+                const errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
                 sectionForCurrentAcNum.appendChild(errorP);
                 loaderIcon.remove();
                 loaderText.remove();
@@ -69,7 +69,7 @@ function buildHierarchy() {
             }
         } else {
             console.log("Error encountered on call of fetchsru.php");
-            let errorP = createElementByTagAndText("p", "SRU lieferte Fehler für " + acNum);
+            const errorP = createElementByTagAndText("p", "SRU lieferte Fehler für " + acNum);
             sectionForCurrentAcNum.appendChild(errorP);
         }
 
@@ -98,18 +98,18 @@ function buildHierarchy() {
     }
 
     function createElementByTagAndText(elementTag, elementText) {
-        let element = document.createElement(elementTag);
-        let textElement = document.createTextNode(elementText);
+        const element = document.createElement(elementTag);
+        const textElement = document.createTextNode(elementText);
         element.appendChild(textElement);
         return element;
     }
 
     function createTableHeading() {
 
-        let table = document.createElement("table");
-        let tableHead = document.createElement("thead");
-        let tableHeadRow = document.createElement("tr");
-        let tableHeadings = [
+        const table = document.createElement("table");
+        const tableHead = document.createElement("thead");
+        const tableHeadRow = document.createElement("tr");
+        const tableHeadings = [
             "773$$q bzw. 830$$v",
             "Linktyp",
             "Titel des Teils",
@@ -120,7 +120,7 @@ function buildHierarchy() {
         ]
 
         tableHeadings.forEach(item => {
-            let thElement = createElementByTagAndText("th", item);
+            const thElement = createElementByTagAndText("th", item);
             tableHeadRow.appendChild(thElement);
         });
 
@@ -136,28 +136,28 @@ function buildHierarchy() {
         sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen.";
         headingForTable.textContent += sectionAddition;
 
-        var tableBody = document.createElement("tbody");
+        const tableBody = document.createElement("tbody");
 
         for (let i = 0; i < numRecords; i ++) {
 
             //console.log(i);
 
-            let currentRecord = recordsXml.children[0].children[i];
-            let currentTr = document.createElement('tr');
+            const currentRecord = recordsXml.children[0].children[i];
+            const currentTr = document.createElement('tr');
 
             function nsResolver(prefix) {
                 return namespace;
             }
 
-            let partOrder = extractPartOrder(recordsXml, currentRecord);
-            let linkType = extractLinkType(recordsXml, currentRecord);
-            let partTitle = extractPartTitle(recordsXml, currentRecord);
-            let partYear = extractPartYear(recordsXml, currentRecord);
-            let partEdition = extractPartEdition(recordsXml, currentRecord);
-            let partId = extractPartId(recordsXml, currentRecord);
-            let partHoldings = extractPartHoldings(recordsXml, currentRecord);
+            const partOrder = extractPartOrder(recordsXml, currentRecord);
+            const linkType = extractLinkType(recordsXml, currentRecord);
+            const partTitle = extractPartTitle(recordsXml, currentRecord);
+            const partYear = extractPartYear(recordsXml, currentRecord);
+            const partEdition = extractPartEdition(recordsXml, currentRecord);
+            const partId = extractPartId(recordsXml, currentRecord);
+            const partHoldings = extractPartHoldings(recordsXml, currentRecord);
 
-            let isbdTitle = buildTitleFromSubfields(partTitle, linkType);
+            const isbdTitle = buildTitleFromSubfields(partTitle, linkType);
 
             if (partId.substring(2) == acNum.substring(2)) {
                 titleForHeadAcNum = createElementByTagAndText("p", '"' + isbdTitle + '"');
@@ -165,6 +165,8 @@ function buildHierarchy() {
                 titleForHeadAcNum.setAttribute("class", "title");
                 continue;
             }
+
+            let hasInstHoldings;
 
             if (partHoldings) {
                 hasInstHoldings = "Ja";
@@ -196,10 +198,10 @@ function buildHierarchy() {
         function extractPartOrder(recordsXml, currentRecord) {
             // extract order of parts from 773 q or 830 v
             let partOrder;
-            let xpath773 = 'default:datafield[@tag="773"]/default:subfield[@code="q"]/text()'
-            let xpath830 = 'default:datafield[@tag="830"]/default:subfield[@code="v"]/text()'
-            let xpath773Result = recordsXml.evaluate(xpath773, currentRecord, nsResolver);
-            let xpath830Result = recordsXml.evaluate(xpath830, currentRecord, nsResolver);
+            const xpath773 = 'default:datafield[@tag="773"]/default:subfield[@code="q"]/text()'
+            const xpath830 = 'default:datafield[@tag="830"]/default:subfield[@code="v"]/text()'
+            const xpath773Result = recordsXml.evaluate(xpath773, currentRecord, nsResolver);
+            const xpath830Result = recordsXml.evaluate(xpath830, currentRecord, nsResolver);
 
             try {
                 partOrder = xpath773Result.iterateNext().wholeText;
@@ -223,10 +225,10 @@ function buildHierarchy() {
 
         function extractLinkType(recordsXml, currentRecord) {
             // extract link type from leader position 19
-            let xpath = "default:leader/text()";
-            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
-            let leader = xpathResult.iterateNext().wholeText;
-            let linkType = leader.substring(19, 20);
+            const xpath = "default:leader/text()";
+            const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            const leader = xpathResult.iterateNext().wholeText;
+            const linkType = leader.substring(19, 20);
 
             if (linkType == "c") {
                 return "TAT";
@@ -242,17 +244,17 @@ function buildHierarchy() {
         function extractPartTitle(recordsXml, currentRecord) {
             // extract the title of the current record
             
-            let xpathText = 'default:datafield[@tag="245"]/default:subfield/text()';
-            let xpathResultText = recordsXml.evaluate(xpathText, currentRecord, nsResolver);
-            let xpathSf = 'default:datafield[@tag="245"]/default:subfield';
-            let xpathResultSf = recordsXml.evaluate(xpathSf, currentRecord, nsResolver);
+            const xpathText = 'default:datafield[@tag="245"]/default:subfield/text()';
+            const xpathResultText = recordsXml.evaluate(xpathText, currentRecord, nsResolver);
+            const xpathSf = 'default:datafield[@tag="245"]/default:subfield';
+            const xpathResultSf = recordsXml.evaluate(xpathSf, currentRecord, nsResolver);
 
-            var subfields = [];
-            var subfield, text;
+            const subfields = [];
+            let subfield, text;
 
             try {
                 while (subfield = xpathResultSf.iterateNext().getAttribute('code'), text = xpathResultText.iterateNext().wholeText) {
-                    let sfObject = {[subfield]: text};
+                    const sfObject = {[subfield]: text};
                     subfields.push(sfObject);
                 }
             } catch (error) {
@@ -262,11 +264,11 @@ function buildHierarchy() {
         }
 
         function buildTitleFromSubfields(subfields, linkType) {
-            var title = "";
+            let title = "";
             for (let i = 0; i < subfields.length; i ++) {
-                let subfield = subfields[i];
-                let subfieldKey = Object.keys(subfield)[0];
-                let subfieldValue = Object.values(subfield)[0];
+                const subfield = subfields[i];
+                const subfieldKey = Object.keys(subfield)[0];
+                const subfieldValue = Object.values(subfield)[0];
                 if ( linkType === "TAT" && ! ["a", "b", "c"].indexOf(subfieldKey) ) {
                     continue;
                 } else {
@@ -291,18 +293,18 @@ function buildHierarchy() {
 
         function extractPartYear(recordsXml, currentRecord) {
             // extract the publication year of the current record
-            let xpath = 'default:controlfield[@tag="008"]/text()';
-            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
-            let marc008 = xpathResult.iterateNext().wholeText;
-            let year = marc008.substring(7,11);
+            const xpath = 'default:controlfield[@tag="008"]/text()';
+            const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            const marc008 = xpathResult.iterateNext().wholeText;
+            const year = marc008.substring(7,11);
             return year;
         }
 
         function extractPartEdition(recordsXml, currentRecord) {
             // extract edition from MARC 250
-            let xpath = 'default:datafield[@tag="250"]/default:subfield/text()';
-            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
-            let marc250 = "";
+            const xpath = 'default:datafield[@tag="250"]/default:subfield/text()';
+            const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            const marc250 = "";
             try {
                 marc250 = xpathResult.iterateNext().wholeText;
             } catch {
@@ -313,16 +315,16 @@ function buildHierarchy() {
 
         function extractPartId(recordsXml, currentRecord) {
             // extract AC-Number of the current record
-            let xpath = 'default:controlfield[@tag="009"]/text()';
-            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
-            let marc009 = xpathResult.iterateNext().wholeText;
+            const xpath = 'default:controlfield[@tag="009"]/text()';
+            const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            const marc009 = xpathResult.iterateNext().wholeText;
             return marc009;
         }
 
         function extractPartHoldings(recordsXml, currentRecord) {
             // extract holdings info from marc 852
-            let xpath = 'default:datafield[@tag="852"]/default:subfield[@code="a"]/text()';
-            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            const xpath = 'default:datafield[@tag="852"]/default:subfield[@code="a"]/text()';
+            const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
             let hasInstHoldings = false;
             try {
                 while ( marc852a = xpathResult.iterateNext().wholeText ) {
@@ -342,7 +344,7 @@ function buildHierarchy() {
 
         if (recordsXml) {
 
-            let table = createTableHeading();
+            const table = createTableHeading();
             createTableContents(table, recordsXml);
 
             sectionElement.append(titleForHeadAcNum);
