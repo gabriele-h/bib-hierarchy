@@ -28,15 +28,16 @@ select {
 }
 
 legend {
-    border: 1px solid #BBF;
-    border-radius: 0.2rem;
-    padding: 0.2rem 0.4rem;
-    background-color: #EEF;
+  border: 1px solid #BBF;
+  border-radius: 0.2rem;
+  padding: 0.2rem 0.4rem;
+  background-color: #EEF;
 }
 
 legend a {
-    color: #445;
-    text-decoration: none;
+  color: #445;
+  text-decoration: none;
+}
 
 li {
   line-height: 1.25rem;
