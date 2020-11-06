@@ -75,7 +75,7 @@ function buildHierarchy() {
         try {
             document.body.appendChild(modifiedSectionForCurrentAcNum);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             console.log("Could not create table.");
         } finally {
             document.body.appendChild(sectionForCurrentAcNum);
@@ -148,16 +148,18 @@ function buildHierarchy() {
                 return namespace;
             }
 
-            partOrder = extractPartOrder(recordsXml, currentRecord);
-            linkType = extractLinkType(recordsXml, currentRecord);
-            partTitle = extractPartTitle(recordsXml, currentRecord);
-            partYear = extractPartYear(recordsXml, currentRecord);
-            partEdition = extractPartEdition(recordsXml, currentRecord);
-            partId = extractPartId(recordsXml, currentRecord);
-            partHoldings = extractPartHoldings(recordsXml, currentRecord);
+            let partOrder = extractPartOrder(recordsXml, currentRecord);
+            let linkType = extractLinkType(recordsXml, currentRecord);
+            let partTitle = extractPartTitle(recordsXml, currentRecord);
+            let partYear = extractPartYear(recordsXml, currentRecord);
+            let partEdition = extractPartEdition(recordsXml, currentRecord);
+            let partId = extractPartId(recordsXml, currentRecord);
+            let partHoldings = extractPartHoldings(recordsXml, currentRecord);
+
+            let isbdTitle = buildTitleFromSubfields(partTitle, linkType);
 
             if (partId.substring(2) == acNum.substring(2)) {
-                titleForHeadAcNum = createElementByTagAndText("p", '"' + partTitle + '"');
+                titleForHeadAcNum = createElementByTagAndText("p", '"' + isbdTitle + '"');
                 titleForHeadAcNum.setAttribute("id", "title-" + acNum);
                 titleForHeadAcNum.setAttribute("class", "title");
                 continue;
@@ -175,7 +177,7 @@ function buildHierarchy() {
 
             appendTableDataToRow(partOrder, currentTr);
             appendTableDataToRow(linkType, currentTr);
-            appendTableDataToRow(partTitle, currentTr);
+            appendTableDataToRow(isbdTitle, currentTr);
             appendTableDataToRow(partYear, currentTr);
             appendTableDataToRow(partEdition, currentTr);
             appendTableDataToRow(partId, currentTr);
@@ -238,16 +240,50 @@ function buildHierarchy() {
 
         function extractPartTitle(recordsXml, currentRecord) {
             // extract the title of the current record
-            let xpath = 'default:datafield[@tag="245"]/default:subfield/text()';
-            let xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
-            subfields = [];
+            
+            let xpathText = 'default:datafield[@tag="245"]/default:subfield/text()';
+            let xpathResultText = recordsXml.evaluate(xpathText, currentRecord, nsResolver);
+            let xpathSf = 'default:datafield[@tag="245"]/default:subfield';
+            let xpathResultSf = recordsXml.evaluate(xpathSf, currentRecord, nsResolver);
+
+            var subfields = [];
+            var subfield, text;
+
             try {
-                while (subfield = xpathResult.iterateNext().wholeText) {
-                    subfields.push(subfield);
+                while (subfield = xpathResultSf.iterateNext().getAttribute('code'), text = xpathResultText.iterateNext().wholeText) {
+                    let sfObject = {[subfield]: text};
+                    subfields.push(sfObject);
                 }
-            } catch {
+            } catch (error) {
+                //console.log(error);
             }
-            return subfields.join(', ');
+            return subfields;
+        }
+
+        function buildTitleFromSubfields(subfields, linkType) {
+            var title = "";
+            for (let i = 0; i < subfields.length; i ++) {
+                let subfield = subfields[i];
+                let subfieldKey = Object.keys(subfield)[0];
+                let subfieldValue = Object.values(subfield)[0];
+                let isLastSubfield = (i === subfields.length - 1);
+                if ( linkType === "TAT" && ! ["a", "b", "c"].indexOf(subfieldKey) ) {
+                    continue;
+                } else {
+                    title += subfieldValue;
+                    if (subfieldKey === "b" && !isLastSubfield) {
+                        title += ' : ';
+                    } else if (subfieldKey === "c" && !isLastSubfield) {
+                        title += ' / ';
+                    } else if (subfieldKey === "n" && !isLastSubfield) {
+                        title += '. ';
+                    } else if (subfieldKey === "p" && !isLastSubfield) {
+                        title += ', ';
+                    }
+                }
+            }
+
+            return title;
         }
 
         function extractPartYear(recordsXml, currentRecord) {
