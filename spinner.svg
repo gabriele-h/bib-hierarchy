@@ -1,5 +1,5 @@
 <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
-<svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+<svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
     <g fill="none" fill-rule="evenodd" stroke-width="2">
         <circle cx="70" cy="70" r="1" stroke="#0000EE">
             <animate attributeName="r"

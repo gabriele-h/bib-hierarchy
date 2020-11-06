@@ -89,6 +89,10 @@ tbody tr:nth-child(even) {
   z-index: 9999;
 }
 
+#loader-text {
+  text-align: center;
+}
+
 #submit {
   background-color: #223;
   border-color: #445;

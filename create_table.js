@@ -11,8 +11,9 @@ function buildHierarchy() {
     } catch {}
 
     // add loader icon and text
-    let loaderString = "Daten werden geladen. Bitte warten - 1000 Datensätze brauchen ca. 50 Sekunden.";
+    let loaderString = "Bitte warten. Ladezeit kann Sekunden bis Minuten betragen.";
     var loaderText = createElementByTagAndText("p", loaderString);
+    loaderText.setAttribute("id", "loader-text");
     var loaderIcon = document.createElement("div");
     loaderIcon.setAttribute("id", "loader");
     let loaderImage = document.createElement("img");
@@ -23,7 +24,7 @@ function buildHierarchy() {
     document.body.appendChild(loaderText);
     document.body.appendChild(loaderIcon);
 
-    // get avlues from form inputs
+    // get values from form inputs
     var acNum = document.getElementById("acnum").value;
     var instId = document.getElementById("alma_inst_id").value;
     var namespace = "http://www.loc.gov/MARC21/slim";
