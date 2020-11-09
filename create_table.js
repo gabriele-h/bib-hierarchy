@@ -7,6 +7,11 @@ function buildHierarchy() {
     const acNum = acNumInputValue.replace(/\s/g, '').replace(/^([^aA])/, 'AC$1');
     acNumInput.value = acNum;
     const instId = document.getElementById("alma_inst_id").value;
+
+    // change the current location in browser's location bar
+    const acNumUri = encodeURI(acNum);
+    const instIdUri = encodeURI(instId);
+    history.replaceState(null, null, "?acnum="+acNumUri+"&alma_inst_id="+instIdUri);
     
     // disable input after submit
     const inputForm = document.getElementById("input-form");
