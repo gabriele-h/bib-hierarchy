@@ -1,5 +1,12 @@
 <?php
-/* Fetch data by "other_system_number" from OBV NZ via SRU */
+/* 
+ * Fetch data by "other_system_number" from OBV NZ via SRU
+ *
+ * Data returned is extremely simple with a sructure like so:
+ * <records><record>...</record></records>
+ * Where record is the same element as retrieved via SRU (e. g.
+ * has the same namespace) and is repeatable.
+ */
 
 $baseurl = 'https://eu02.alma.exlibrisgroup.com';
 $urlpath = '/view/sru/';
