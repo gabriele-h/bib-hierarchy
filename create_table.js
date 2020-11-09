@@ -86,7 +86,10 @@ function buildHierarchy() {
             document.body.appendChild(sectionForCurrentAcNum);
         }
 
-        makeTableSortable();
+        if (document.querySelector("tbody")) {
+            makeTableSortable();
+        }
+
         try {
             document.querySelector("thead").querySelector("th").click();
         } catch (error) {
