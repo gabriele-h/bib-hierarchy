@@ -84,6 +84,11 @@ function buildHierarchy() {
         }
 
         makeTableSortable();
+        try {
+            document.querySelector("thead").querySelector("th").click();
+        } catch (error) {
+            //console.log(error);
+        }
     };
 
     xhr.send();
@@ -367,6 +372,7 @@ function buildHierarchy() {
     function makeTableSortable() {
          // kudos https://stackoverflow.com/questions/14267781
          let asc;
+         // In first column (773$$q/830$$v) sort by first digits only
          const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.replace(',', '.').replace(/ .*$/, '') || tr.children[idx].textContent.replace(',', '.').replace(/ .*$/, '') : tr.children[idx].innerText || tr.children[idx].textContent;
          const comparer = (idx, asc) => (a, b) => ((v1, v2) => 
              v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
