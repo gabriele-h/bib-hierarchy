@@ -16,7 +16,7 @@
     <form onsubmit="buildHierarchy(acnum, alma_inst_id); return false;">
         <fieldset id="input-form">
             <label for="acnum">AC-Nummer des Kopfsatzes:</label>
-            <input id="acnum" name="acnum" required type="text" value="" pattern="[Aa][Cc](?!00000000)[0-9]{8}" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern. Sind Leerzeichen in der Eingabe enhalten oder haben Sie sich vertippt?')" onchange="this.setCustomValidity('')"></input>
+            <input id="acnum" name="acnum" required type="text" value="" pattern="\s?([Aa][Cc])?(?!00000000)[0-9]{8}\s?" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern. Sind Leerzeichen in der Eingabe enhalten oder haben Sie sich vertippt?')" onchange="this.setCustomValidity('')"></input>
             <select id="alma_inst_id" name="alma_inst_id">
                 
             </select>
@@ -27,7 +27,7 @@
     <div id="hilfe">
         <em>Anwendungshilfe</em>
         <ul>
-            <li>Im Feld "AC-Nummer des Kopfsatzes" muss der übergeordnete Datensatz eingegeben werden</li>
+            <li>Im Feld "AC-Nummer des Kopfsatzes" muss der übergeordnete Datensatz eingegeben werden, wobei das Präfix "AC" ausgelassen werden kann</li>
             <li>Der Wert im Dropdown beeinflusst nur die Information, ob für diese Institution Holdings vorhanden sind, die nicht vom Publishing unterdrückt wurden ("Lokalbestand")</li>
             <li>Das Laden vieler Daten kann wegen der SRU Calls dauern, z. B. für 1000 Datensätze ca. 50 Sekunden</li>
             <li>Die Daten werden immer aus der Network Zone geholt</li>

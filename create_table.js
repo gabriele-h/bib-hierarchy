@@ -1,5 +1,12 @@
 "use strict";
 function buildHierarchy() {
+
+    // get and manipulate values from form inputs
+    const acNumInput = document.getElementById("acnum");
+    let acNumInputValue = acNumInput.value;
+    const acNum = acNumInputValue.replace(/\s/g, '').replace(/^([^aA])/, 'AC$1');
+    acNumInput.value = acNum;
+    const instId = document.getElementById("alma_inst_id").value;
     
     // disable input after submit
     const inputForm = document.getElementById("input-form");
@@ -25,11 +32,6 @@ function buildHierarchy() {
     document.body.appendChild(loaderText);
     document.body.appendChild(loaderIcon);
 
-    // get values from form inputs
-    const acNum = document.getElementById("acnum").value;
-    const instId = document.getElementById("alma_inst_id").value;
-    const namespace = "http://www.loc.gov/MARC21/slim";
-
     // make vars global where necessary
     let headingForTable;
     let numberOfRecords;
@@ -40,8 +42,9 @@ function buildHierarchy() {
         "ac_num": acNum
     });
     const requestUrl = "./fetchsru.php?" + params;
+    const namespace = "http://www.loc.gov/MARC21/slim";
 
-    // make sru requests
+    // call fetchsru.php and build table
     const xhr = new XMLHttpRequest;
 
     xhr.open('GET', requestUrl);
