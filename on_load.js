@@ -54,9 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             const acnum = params.get('acnum');
             const instId = params.get('alma_inst_id');
-            acnumInput.value = acnum;
-            institutionInput.value = instId;
-            submitButton.click();
+            if (acnum && instId) {
+                console.log("Setting form input from URL params.");
+                acnumInput.value = acnum;
+                institutionInput.value = instId;
+                submitButton.click();
+            }
         } catch (error) {
             // console.log(error)
         }
