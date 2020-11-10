@@ -13,8 +13,8 @@ Sie ist in PHP und javaScript umgesetzt. Warum? Weil die technischen Gegebenheit
 # Beschränkungen
 
 * Die SRU-Abfragen sind nicht parallelisiert und SRU ist generell nicht besonders flott, also dauert es eine Zeit, bis die Informationen geladen sind.
-* Die ISBD-Darstellung ist ein bisschen weniger verfeinert als im Original. Es wird nicht nach Anzahl der Vorkommen differenziert, sondern stur nach Subfeld ein Delimiter präfigiert.
+* Die ISBD-Darstellung ist ein bisschen weniger verfeinert als in Stefan Schuhs Implementierung. Es wird nicht nach Anzahl der Vorkommen differenziert, sondern stur nach Subfeld ein Delimiter präfigiert.
 
 # Autor\*innen
-Gabriele Höfler, die die vorliegende Version umgesetzt hat
-Stefan Schuh, von dem die komplette Konzeption abgeschaut ist
+* Gabriele Höfler, die die vorliegende Version umgesetzt hat
+* Stefan Schuh, von dem die komplette Konzeption abgeschaut ist
