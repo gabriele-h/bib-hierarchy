@@ -48,6 +48,7 @@ function buildHierarchy() {
     });
     const requestUrl = "./fetchsru.php?" + params;
     const namespace = "http://www.loc.gov/MARC21/slim";
+    const tableId = "bib-hierarchy-"+acNum;
 
     // call fetchsru.php and build table
     const xhr = new XMLHttpRequest;
@@ -62,6 +63,7 @@ function buildHierarchy() {
         sectionForCurrentAcNum.setAttribute("id", acNum);
         const headingForTableText = "Ausgehend von " + acNum;
         headingForTable = createElementByTagAndText("h2", headingForTableText);
+        headingForTable.setAttribute("id", "bib-hierarchy-table-heading");
         sectionForCurrentAcNum.append(headingForTable);
 
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
@@ -125,6 +127,7 @@ function buildHierarchy() {
     function createTableHeading() {
 
         const table = document.createElement("table");
+        table.setAttribute("id", tableId);
         const tableHead = document.createElement("thead");
         const tableHeadRow = document.createElement("tr");
         const tableHeadings = [
@@ -151,8 +154,12 @@ function buildHierarchy() {
     function createTableContents(table, recordsXml) {
 
         const numDependentRecords = numberOfRecords-1;
-        const sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen.";
-        headingForTable.textContent += sectionAddition;
+        if (numDependentRecords > 0) {
+            const sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen";
+            headingForTable.textContent += sectionAddition;
+        } else {
+            headingForTable.textContent = "Keine abhängigen Datensätze für " + acNum;
+        }
 
         const tableBody = document.createElement("tbody");
 
