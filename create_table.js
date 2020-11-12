@@ -49,6 +49,7 @@ function buildHierarchy() {
     const requestUrl = "./fetchsru.php?" + params;
     const namespace = "http://www.loc.gov/MARC21/slim";
     const tableId = "bib-hierarchy-"+acNum;
+    const csvLinkId = "download-csv";
 
     // call fetchsru.php and build table
     const xhr = new XMLHttpRequest;
@@ -95,6 +96,12 @@ function buildHierarchy() {
 
         if (document.querySelector("tbody")) {
             makeTableSortable();
+        }
+
+        try {
+            downloadTableAsCsv(tableId, csvLinkId);
+        } catch(error) {
+            console.log(error);
         }
 
         try {
@@ -373,11 +380,10 @@ function buildHierarchy() {
             createTableContents(table, recordsXml);
 
             if (numberOfRecords > 1) {
-                const tsvDownloadButton = createElementByTagAndText("button", "TSV Download");
-                tsvDownloadButton.setAttribute("id", "download-tsv");
-                const tsvOnclick = "download_table_as_tsv('" + tableId + "')";
-                tsvDownloadButton.setAttribute("onclick", tsvOnclick);
-                sectionElement.append(tsvDownloadButton);
+                const csvDownloadLink = createElementByTagAndText("a", "CSV Download");
+                csvDownloadLink.setAttribute("id", csvLinkId);
+                sectionElement.append(csvDownloadLink);
+                console.log(csvDownloadLink);
             }
 
             sectionElement.append(titleForHeadAcNum);
