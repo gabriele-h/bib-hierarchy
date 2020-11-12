@@ -9,6 +9,15 @@ a {
   color: #0000FF;
 }
 
+button {
+  background-color: white;
+  border-color: #99A;
+  border-radius: 0.5rem;
+  color: #001;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+}
+
 fieldset {
   border-color: #EEF;
   border-radius: 0.5rem;
@@ -70,6 +79,16 @@ td, th {
 
 tbody tr:nth-child(even) {
   background: #EEF;
+}
+
+#bib-hierarchy-table-heading {
+  display: inline;
+}
+
+#download-tsv {
+  display: inline;
+  margin-left: 1rem;
+  vertical-align: top;
 }
 
 #hilfe {

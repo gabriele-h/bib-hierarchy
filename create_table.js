@@ -372,8 +372,19 @@ function buildHierarchy() {
             const table = createTableHeading();
             createTableContents(table, recordsXml);
 
+            if (numberOfRecords > 1) {
+                const tsvDownloadButton = createElementByTagAndText("button", "TSV Download");
+                tsvDownloadButton.setAttribute("id", "download-tsv");
+                const tsvOnclick = "download_table_as_tsv('" + tableId + "')";
+                tsvDownloadButton.setAttribute("onclick", tsvOnclick);
+                sectionElement.append(tsvDownloadButton);
+            }
+
             sectionElement.append(titleForHeadAcNum);
-            sectionElement.append(table);
+
+            if (numberOfRecords > 1) {
+                sectionElement.append(table);
+            }
 
             loaderIcon.remove();
             loaderText.remove();
