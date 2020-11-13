@@ -100,16 +100,16 @@ function buildHierarchy() {
         }
 
         try {
+            document.querySelector("thead").querySelector("th").click();
+        } catch (error) {
+            //console.log(error);
+        }
+
+        try {
             downloadTableAsCsv(tableId, csvLinkId);
             downloadTableAsXls(tableId, xlsLinkId);
         } catch(error) {
             console.log(error);
-        }
-
-        try {
-            document.querySelector("thead").querySelector("th").click();
-        } catch (error) {
-            //console.log(error);
         }
     };
 
