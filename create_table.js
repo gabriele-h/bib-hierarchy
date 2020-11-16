@@ -107,7 +107,6 @@ function buildHierarchy() {
 
         try {
             downloadTableAsCsv(tableId, csvLinkId);
-            downloadTableAsXls(tableId, xlsLinkId);
         } catch(error) {
             console.log(error);
         }
@@ -385,9 +384,6 @@ function buildHierarchy() {
                 const csvDownloadLink = createElementByTagAndText("a", "CSV Download");
                 csvDownloadLink.setAttribute("id", csvLinkId);
                 sectionElement.append(csvDownloadLink);
-                const xlsDownloadLink = createElementByTagAndText("a", "Excel Download");
-                xlsDownloadLink.setAttribute("id", xlsLinkId);
-                sectionElement.append(xlsDownloadLink);
             }
 
             sectionElement.append(titleForHeadAcNum);

@@ -72,8 +72,7 @@ tbody tr:nth-child(even) {
   background: #EEF;
 }
 
-#download-csv,
-#download-xls {
+#download-csv {
   background-color: white;
   border: 1px solid #99A;
   border-radius: 0.5rem;

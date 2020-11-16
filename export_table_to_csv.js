@@ -23,6 +23,6 @@ function downloadTableAsCsv(tableId, linkId, separator = ';') {
     const filename = 'export_' + tableId + '_' + new Date().toISOString().substring(0, 10) + '.csv';
     const link = document.getElementById(linkId);
     link.setAttribute('target', '_blank');
-    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString));
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csvString));
     link.setAttribute('download', filename);
 }
