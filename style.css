@@ -54,7 +54,7 @@ table {
      0px 2px 5px rgba(0,0,0,0.05),
      0px 5px 5px rgba(0,0,0,0.05),
      0px 7px 5px rgba(0,0,0,0.05);
-  max-width: 90vw;
+  max-width: 100vw;
   margin: 0 auto;
 }
 
@@ -70,6 +70,10 @@ td, th {
 
 tbody tr:nth-child(even) {
   background: #EEF;
+}
+
+#alma-inst-id-label {
+  display: none;
 }
 
 #download-csv {
@@ -123,11 +127,11 @@ tbody tr:nth-child(even) {
 }
 
 .has-holdings td:last-child {
-  background-color: #AFA;
+  background-color: #A9EFBF;
 }
 
 .has-no-holdings td:last-child {
-  background-color: #FAA;
+  background-color: #F5B7A1;
 }
 
 .title {

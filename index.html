@@ -1,4 +1,4 @@
-<html>
+<html lang="de">
 <head>
     <title>BIB HIERARCHY</title>
     <meta charset="UTF-8">
@@ -13,28 +13,31 @@
         <h1>Diese Seite benötigt Javascript</h1>
         <p>Bitte um Freigabe von Scripten der Domain univie.ac.at</p>
     </noscript>
-    <h1>Hierarchien im Alma des OBV</h1>
-    <form onsubmit="buildHierarchy(acnum, alma_inst_id); return false;">
-        <fieldset id="input-form">
-            <label for="acnum">AC-Nummer des Kopfsatzes:</label>
-            <input id="acnum" name="acnum" required type="text" value="" pattern="\s?([Aa][Cc])?(?!00000000)[0-9]{8}\s?" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern mit oder ohne AC-Präfix. Haben Sie sich vielleicht vertippt?')" onchange="this.setCustomValidity('')"></input>
-            <select id="alma_inst_id" name="alma_inst_id">
-            </select>
-            <input id="submit" name="submit" type="submit" value="Hierarchie anzeigen">
-            <legend><a href="javascript:displayHelp();">Hilfe?</a></legend>
-        </fieldset>
-    </form>
-    <div id="hilfe">
-        <em>Anwendungshilfe</em>
-        <ul>
-            <li>Im Feld "AC-Nummer des Kopfsatzes" muss der übergeordnete Datensatz eingegeben werden, wobei das Präfix "AC" ausgelassen werden kann</li>
-            <li>Der Wert im Dropdown beeinflusst nur die Information, ob für diese Institution Holdings vorhanden sind, die nicht vom Publishing unterdrückt wurden ("Lokalbestand")</li>
-            <li>Das Laden vieler Daten kann wegen der SRU Calls dauern, z. B. für 1000 Datensätze ca. 50 Sekunden</li>
-            <li>Die Daten werden immer aus der Network Zone geholt</li>
-            <li>Die Daten werden nach Zählung ("773$$q bzw. 830$$v") sortiert geladen und können per Klick auf die Tabellenüberschrift neu sortiert werden, immer nur nach exakt einer Spalte</li>
-            <li>Titel werden annähernd in ISBD Interpunktion dargestellt, so weit das im Rahmen einer Automatisierung möglich ist</li>
-            <li>Über "CSV Download" kann die Tabelle heruntergeladen werden (Semikolon-getrennt, UTF8)</li>
-        </ul>
-    </div>
+    <main role="main" id="main">
+        <h1>Hierarchien im Alma des OBV</h1>
+        <form onsubmit="buildHierarchy(acnum, alma_inst_id); return false;">
+            <fieldset id="input-form">
+                <label for="acnum">AC-Nummer des Kopfsatzes:</label>
+                <input id="acnum" name="acnum" required type="text" value="" pattern="\s?([Aa][Cc])?(?!00000000)[0-9]{8}\s?" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern mit oder ohne AC-Präfix. Haben Sie sich vielleicht vertippt?')" onchange="this.setCustomValidity('')"></input>
+                <label for=alma-inst-id" id="alma-inst-id-label">Lokalbestand anzeigen für:</label>
+                <select id="alma-inst-id" name="alma_inst_id">
+                </select>
+                <input id="submit" name="submit" type="submit" value="Hierarchie anzeigen">
+                <legend><a href="javascript:displayHelp();">Hilfe?</a></legend>
+            </fieldset>
+        </form>
+        <div id="hilfe">
+            <em>Anwendungshilfe</em>
+            <ul>
+                <li>Im Feld "AC-Nummer des Kopfsatzes" muss der übergeordnete Datensatz eingegeben werden, wobei das Präfix "AC" ausgelassen werden kann</li>
+                <li>Der Wert im Dropdown beeinflusst nur die Information, ob für diese Institution Holdings vorhanden sind, die nicht vom Publishing unterdrückt wurden ("Lokalbestand")</li>
+                <li>Das Laden vieler Daten kann wegen der SRU Calls dauern, z. B. für 1000 Datensätze ca. 50 Sekunden</li>
+                <li>Die Daten werden immer aus der Network Zone geholt</li>
+                <li>Die Daten werden nach Zählung ("773$$q bzw. 830$$v") sortiert geladen und können per Klick auf die Tabellenüberschrift neu sortiert werden, immer nur nach exakt einer Spalte</li>
+                <li>Titel werden annähernd in ISBD Interpunktion dargestellt, so weit das im Rahmen einer Automatisierung möglich ist</li>
+                <li>Über "CSV Download" kann die Tabelle heruntergeladen werden (Semikolon-getrennt, UTF8)</li>
+            </ul>
+        </div>
+    </main>
 </body>
 </html>

@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var optionText = document.createTextNode(instCodes[inst]);
             option.appendChild(optionText);
             option.setAttribute("value", inst);
-            var select = document.getElementById("alma_inst_id");
+            var select = document.getElementById("alma-inst-id");
             select.appendChild(option);
         }
     }
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const params = url.searchParams;
         
         const acnumInput = document.getElementById('acnum');
-        const institutionInput = document.getElementById('alma_inst_id');
+        const institutionInput = document.getElementById('alma-inst-id');
         const submitButton = document.getElementById('submit');
     
         try {

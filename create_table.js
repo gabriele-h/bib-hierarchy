@@ -6,7 +6,22 @@ function buildHierarchy() {
     let acNumInputValue = acNumInput.value;
     const acNum = acNumInputValue.replace(/\s/g, '').replace(/^([^aA])/, 'AC$1');
     acNumInput.value = acNum;
-    const instId = document.getElementById("alma_inst_id").value;
+    const instId = document.getElementById("alma-inst-id").value;
+
+    // make vars global where necessary
+    let headingForTable;
+    let numberOfRecords;
+    let records;
+    let titleForHeadAcNum;
+
+    const params = new URLSearchParams({
+        "ac_num": acNum
+    });
+    const requestUrl = "./fetchsru.php?" + params;
+    const namespace = "http://www.loc.gov/MARC21/slim";
+    const tableId = "bib-hierarchy-"+acNum;
+    const csvLinkId = "download-csv";
+    const main = document.getElementById("main");
 
     // change the current location in browser's location bar
     const acNumUri = encodeURI(acNum);
@@ -34,22 +49,8 @@ function buildHierarchy() {
     loaderImage.setAttribute("alt", "Ladeanimation");
 
     loaderIcon.appendChild(loaderImage);
-    document.body.appendChild(loaderText);
-    document.body.appendChild(loaderIcon);
-
-    // make vars global where necessary
-    let headingForTable;
-    let numberOfRecords;
-    let records;
-    let titleForHeadAcNum;
-
-    const params = new URLSearchParams({
-        "ac_num": acNum
-    });
-    const requestUrl = "./fetchsru.php?" + params;
-    const namespace = "http://www.loc.gov/MARC21/slim";
-    const tableId = "bib-hierarchy-"+acNum;
-    const csvLinkId = "download-csv";
+    main.appendChild(loaderText);
+    main.appendChild(loaderIcon);
     const xlsLinkId = "download-xls";
 
     // call fetchsru.php and build table
@@ -87,12 +88,12 @@ function buildHierarchy() {
         }
 
         try {
-            document.body.appendChild(modifiedSectionForCurrentAcNum);
+            main.appendChild(modifiedSectionForCurrentAcNum);
         } catch (error) {
             //console.log(error);
             console.log("Could not create table.");
         } finally {
-            document.body.appendChild(sectionForCurrentAcNum);
+            main.appendChild(sectionForCurrentAcNum);
         }
 
         if (document.querySelector("tbody")) {
