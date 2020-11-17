@@ -72,10 +72,6 @@ tbody tr:nth-child(even) {
   background: #EEF;
 }
 
-#alma-inst-id-label {
-  display: none;
-}
-
 #download-csv {
   background-color: white;
   border: 1px solid #99A;

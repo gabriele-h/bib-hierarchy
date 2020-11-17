@@ -19,8 +19,7 @@
             <fieldset id="input-form">
                 <label for="acnum">AC-Nummer des Kopfsatzes:</label>
                 <input id="acnum" name="acnum" required type="text" value="" pattern="\s?([Aa][Cc])?(?!00000000)[0-9]{8}\s?" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern mit oder ohne AC-Präfix. Haben Sie sich vielleicht vertippt?')" onchange="this.setCustomValidity('')"></input>
-                <label for=alma-inst-id" id="alma-inst-id-label">Lokalbestand anzeigen für:</label>
-                <select id="alma-inst-id" name="alma_inst_id">
+                <select id="alma-inst-id" name="alma_inst_id" aria-label="Lokalbestand anzeigen für">
                 </select>
                 <input id="submit" name="submit" type="submit" value="Hierarchie anzeigen">
                 <legend><a href="javascript:displayHelp();">Hilfe?</a></legend>
