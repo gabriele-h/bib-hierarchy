@@ -71,6 +71,11 @@ th {
   cursor: pointer;
 }
 
+th::after {
+  color: rgba(0,0,0,0);
+  content: "\00A0\25BC";
+}
+
 td, th {
   padding: 0.5rem;
 }
@@ -146,11 +151,13 @@ tbody tr:nth-child(even) {
 }
 
 .ascending::after {
-  content: " \25BC";
+  color: #EEF;
+  content: "\00A0\25BC";
 }
 
 .descending::after {
-  content: " \25B2";
+  color: #EEF;
+  content: "\00A0\25B2";
 }
 
 .has-holdings td:last-child {
