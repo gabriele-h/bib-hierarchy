@@ -303,7 +303,7 @@ function buildHierarchy() {
                 const subfield = subfields[i];
                 const subfieldKey = Object.keys(subfield)[0];
                 const subfieldValue = Object.values(subfield)[0];
-                if ( linkType === "TAT" && ! ["a", "b", "c"].indexOf(subfieldKey) ) {
+                if ( linkType === "TAT" && ["a", "b", "c"].indexOf(subfieldKey) >= 0 ) { 
                     continue;
                 } else {
                     if (title !== "") {
