@@ -466,16 +466,10 @@ function buildHierarchy() {
                  }
              }
 
-             console.log("For " + v1 + " and " + v2 + " comparisonResult was " + comparisonResult);
-             console.log(lengthDiffV1V2);
-
              if ( comparisonResult.every(x => x === 0) ) {
-             console.log(lengthDiffV1V2);
                  if (lengthDiffV1V2 > 0) {
-                     console.log("Deciding by length, v1 longer than v2.");
                      return 1;
                  } else if (lengthDiffV1V2 < 0) {
-                     console.log("Deciding by length, v1 shorter than v2.");
                      return -1;
                  } else {
                      return 0;
