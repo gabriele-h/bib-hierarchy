@@ -494,7 +494,10 @@ function buildHierarchy() {
          // kudos https://stackoverflow.com/questions/14267781
          let asc;
 
-         const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.replace(/[/-][^.,]+/, '').split(/[,.]/) || tr.children[idx].textContent.split(/[,.]/) : tr.children[idx].innerText || tr.children[idx].textContent;
+         const reNichtsortier = /<<[^>]*>> */;
+         const reFromTo = /[/-][^.,]+/;
+
+         const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.replace(reFromTo, '').split(/[,.]/) || tr.children[idx].textContent.replace(reFromTo, '').split(/[,.]/) : tr.children[idx].innerText.replace(reNichtsortier, '') || tr.children[idx].textContent.replace(reNichtsortier, '');
 
          const comparer = (idx, asc) => (a, b) => ((v1, v2) => compareValues(v1, v2)
              )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
