@@ -406,12 +406,61 @@ function buildHierarchy() {
     }
 
     function makeTableSortable() {
+         // In first column (773$$q/830$$v) implement special sort
+         function compareValues (v1, v2) {
+             
+             let comparisonResult = 0;
+             let maxLength;
+
+             if (v1.length > v2.length) {
+                 maxLength = v1.length;
+             } else {
+                 maxLength = v2.length;
+             }
+
+             for (let i=0; i < maxLength; i++) {
+
+                 let localCompare;
+                 let v1Current;
+                 let v2Current;
+
+                 try {
+                     v1Current = v1[i];
+                     v2Current = v2[i];
+                 } catch(error) {
+                     //console.log(error);
+                     continue;
+                 }
+
+                 console.log("v1Current " + v1Current + " v2Current " + v2Current);
+
+                 if ( typeof v1Current !== 'undefined' && typeof v2Current !== 'undefined' ) {
+
+                     if ( !isNaN(v1Current) && !isNaN(v2Current) ) {
+                         localCompare = v1Current - v2Current;
+                     } else {
+                         localCompare = v1Current.toString().localeCompare(v2Current);
+                     }
+
+                     comparisonResult += localCompare;
+                 }
+             }
+
+             console.log("v1 " + v1 + " und v2 " + v2 + " resultierten in " + comparisonResult);
+
+             if ( comparisonResult == 0 && v1.length > v2.length ) {
+                 return 1;
+             } else {
+                 return comparisonResult;
+             }
+         }
+
          // kudos https://stackoverflow.com/questions/14267781
          let asc;
-         // In first column (773$$q/830$$v) sort by first digits only
-         const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.replace(',', '.').replace(/ .*$/, '') || tr.children[idx].textContent.replace(',', '.').replace(/ .*$/, '') : tr.children[idx].innerText || tr.children[idx].textContent;
-         const comparer = (idx, asc) => (a, b) => ((v1, v2) => 
-             v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+
+         const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.split(/[,.]/) || tr.children[idx].textContent.split(/[,.]/) : tr.children[idx].innerText || tr.children[idx].textContent;
+
+         const comparer = (idx, asc) => (a, b) => ((v1, v2) => compareValues(v1, v2)
              )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
          
          // do the work...
