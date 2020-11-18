@@ -200,6 +200,11 @@ function buildHierarchy() {
                 continue;
             }
 
+            if (typeof partOrder === "undefined") {
+                console.log("Skipping " + partId + ", because there is no valid $$w in either 773 or 830.");
+                continue;
+            }
+
             let hasInstHoldings;
 
             if (partHoldings) {
@@ -232,29 +237,51 @@ function buildHierarchy() {
         function extractPartOrder(recordsXml, currentRecord, nsResolver) {
             // extract order of parts from 773 q or 830 v
             let partOrder;
-            const xpath773 = 'default:datafield[@tag="773"]/default:subfield[@code="q"]/text()'
-            const xpath830 = 'default:datafield[@tag="830"]/default:subfield[@code="v"]/text()'
-            const xpath773Result = recordsXml.evaluate(xpath773, currentRecord, nsResolver);
-            const xpath830Result = recordsXml.evaluate(xpath830, currentRecord, nsResolver);
+            let currentCategory;
 
-            try {
-                partOrder = xpath773Result.iterateNext().wholeText;
-            } catch (error) {
-                // console.log(error);
+            const xpath773Or830 = 'default:datafield[@tag="773" or @tag="830"]';
+            const xpath773Or830Result = recordsXml.evaluate(xpath773Or830, currentRecord, nsResolver);
+
+            if (xpath773Or830Result.resultType !== 4) {
+                console.log("No 773 or 830 found.");
+                return false;
             }
 
-            try {
-                partOrder = xpath830Result.iterateNext().wholeText;
-            } catch (error) {
-                // console.log(error);
-            }
+            while (currentCategory = xpath773Or830Result.iterateNext()) {
 
-            if (!partOrder) {
-                partOrder = ''
+                let xpathSfWResult;
+                let sfWText;
+
+                const currentCategoryNumber = currentCategory.getAttribute("tag");
+    
+                const xpathSfW = 'default:subfield[@code="w"]/text()';
+    
+                try {
+                    xpathSfWResult = recordsXml.evaluate(xpathSfW, currentCategory, nsResolver);
+                    sfWText = xpathSfWResult.iterateNext().wholeText;
+                } catch (error) {
+                    continue;
+                }
+    
+                if (typeof sfWText !== "undefined" && sfWText.indexOf(acNum) !== -1) {
+                    let xpathSfOrder;
+                    if (currentCategoryNumber == 773) {
+                        xpathSfOrder = 'default:subfield[@code="q"]/text()';
+                    } else if (currentCategoryNumber == 830) {
+                        xpathSfOrder = 'default:subfield[@code="v"]/text()';
+                    }
+                    const partOrderResult = recordsXml.evaluate(xpathSfOrder, currentCategory, nsResolver);
+                    try {
+                        partOrder = partOrderResult.iterateNext().wholeText;
+                    } catch (error) {
+                        return "";
+                    }
+                } else {
+                    continue;
+                }
             }
 
             return partOrder;
-
         }
 
         function extractLinkType(recordsXml, currentRecord, nsResolver) {
