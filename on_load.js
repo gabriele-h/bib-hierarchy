@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     createInstCodesDropdown();
     loadFormWithUrlParams();
+    contact();
 
     function createInstCodesDropdown() {
         var instCodes = {
@@ -63,6 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             // console.log(error)
         }
+    }
+
+    function contact() {
+        contactNode = document.getElementById("contact");
+        contactNodeText = contactNode.getAttribute("href");
+        contactNodeTextNew = atob(contactNodeText);
+        contactNode.setAttribute("href", contactNodeTextNew);
     }
 
 });
