@@ -1,7 +1,8 @@
+'use strict';
 function makeTableSortable() {
      // In first column (773$$q/830$$v) implement special sort
      function compareValues (v1, v2) {
-         
+
          const comparisonResult = [];
          const maxLength = Math.max(v1.length, v2.length);
          const lengthDiffV1V2 = v1.length - v2.length;
@@ -44,7 +45,7 @@ function makeTableSortable() {
                  comparisonResult.push(localCompare);
              }
          }
-         console.log("v1 " + v1 + " and v2 " + v2 + " resulted in " + comparisonResult);
+         // console.log("v1 " + v1 + " and v2 " + v2 + " resulted in " + comparisonResult);
 
          if ( comparisonResult.every(x => x === 0) ) {
              if ( lengthDiffV1V2 > 0 || v1[0].match(reFromTo) ) {
@@ -77,7 +78,7 @@ function makeTableSortable() {
      const reNichtsortier = /<<[^>]*>> */;
      const reSplitter = /[,. ]/;
 
-     const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.split(reSplitter) || tr.children[idx].textContent.split(reSplitter) : tr.children[idx].innerText.replace(reNichtsortier, '') || tr.children[idx].textContent.replace(reNichtsortier, '');
+     const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.split(reSplitter) || tr.children[idx].textContent.split(reSplitter) : [tr.children[idx].innerText.replace(reNichtsortier, '')] || [tr.children[idx].textContent.replace(reNichtsortier, '')];
 
      const comparer = (idx, asc) => (a, b) => ((v1, v2) => compareValues(v1, v2)
          )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
