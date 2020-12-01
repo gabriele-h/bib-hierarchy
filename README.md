@@ -24,7 +24,7 @@ zur Lizenz beinhaltet.
 
 # Autor\*innen
 * Gabriele Höfler, die die vorliegende Version umgesetzt hat
-* [https://github.com/schuach/bib-hierarchy/](Stefan Schuh), von dem die komplette Konzeption abgeschaut ist (GPL-3.0)
-* [https://stackoverflow.com/users/1079254/calumah](Calumah) für den Tabellenexport (CC BY-SA 4.0)
-* [https://stackoverflow.com/users/736937/jedwards](jedwards) für Teile der Tabellensortierung (CC BY-SA 4.0)
-* [https://stackoverflow.com/users/782034/nick-grealy](Nick Grealy) für Teile der Tabellensortierung (CC BY-SA 3.0)
+* [Stefan Schuh](https://github.com/schuach/bib-hierarchy/), von dem die komplette Konzeption abgeschaut ist (GPL-3.0)
+* [Callumah](https://stackoverflow.com/users/1079254/calumah) für den Tabellenexport (CC BY-SA 4.0)
+* [jedwards](https://stackoverflow.com/users/736937/jedwards) für Teile der Tabellensortierung (CC BY-SA 4.0)
+* [Nick Grealy](https://stackoverflow.com/users/782034/nick-grealy) für Teile der Tabellensortierung (CC BY-SA 3.0)
