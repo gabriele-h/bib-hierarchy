@@ -72,12 +72,17 @@ function makeTableSortable() {
          }
      }
 
-     // kudos https://stackoverflow.com/questions/14267781
      let asc;
 
      const reNichtsortier = /<<[^>]*>> */;
      const reSplitter = /[,. ]/;
 
+     // Kudos to jedwards and Nick Grealy
+     // The following content is licensed under CC BY-SA 4.0 and CC BY-SA 3.0
+     // https://creativecommons.org/licenses/by-sa/4.0/
+     // https://creativecommons.org/licenses/by-sa/3.0/
+     // original source https://stackoverflow.com/a/53880407 (CC BY-SA 4.0)
+     // and https://stackoverflow.com/a/49041392 (CC BY-SA 3.0)
      const getCellValue = (tr, idx) => idx == 0 ? tr.children[idx].innerText.split(reSplitter) || tr.children[idx].textContent.split(reSplitter) : [tr.children[idx].innerText.replace(reNichtsortier, '')] || [tr.children[idx].textContent.replace(reNichtsortier, '')];
 
      const comparer = (idx, asc) => (a, b) => ((v1, v2) => compareValues(v1, v2)
@@ -94,5 +99,6 @@ function makeTableSortable() {
          for (let i = 0; i < allTh.length; i ++) { allTh[i].setAttribute("class", ""); }
          th.setAttribute("class", asc ? "ascending" : "descending");
      })));
+     // end of CC BY-SA 3.0 resp. CC BY-SA 4.0 licensed code
 }
 

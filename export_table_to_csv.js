@@ -1,5 +1,9 @@
+// Kudos to Calumah
+// All of the following content is licensed under CC BY-SA 4.0
+// https://creativecommons.org/licenses/by-sa/4.0/
+// original source https://stackoverflow.com/a/56370447
+
 // Quick and simple export target #tableId into a csv
-// kudos: https://stackoverflow.com/questions/15547198/56370447#56370447
 
 function downloadTableAsCsv(tableId, linkId, separator = ';') {
     // Select rows from tableId

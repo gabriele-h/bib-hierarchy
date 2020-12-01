@@ -15,6 +15,16 @@ Sie ist in PHP und javaScript umgesetzt. Warum? Weil die technischen Gegebenheit
 * Die SRU-Abfragen sind nicht parallelisiert und SRU ist generell nicht besonders flott, also dauert es eine Zeit, bis die Informationen geladen sind.
 * Die ISBD-Darstellung ist ein bisschen weniger verfeinert als in Stefan Schuhs Implementierung. Es wird nicht nach Anzahl der Vorkommen differenziert, sondern stur nach Subfeld ein Delimiter präfigiert.
 
+# Lizenzhinweis
+Wo nichts anderes angegeben ist, unterliegt der Code der Lizenz GPL-3.0
+
+Code-Teile, die anderen Lizenzen unterliegen, werden mit einem entsprechenden
+Kommentar eingeleitet, der sowohl die Autor\*innen als auch Kürzel der und Link
+zur Lizenz beinhaltet.
+
 # Autor\*innen
 * Gabriele Höfler, die die vorliegende Version umgesetzt hat
-* Stefan Schuh, von dem die komplette Konzeption abgeschaut ist
+* [https://github.com/schuach/bib-hierarchy/](Stefan Schuh), von dem die komplette Konzeption abgeschaut ist (GPL-3.0)
+* [https://stackoverflow.com/users/1079254/calumah](Calumah) für den Tabellenexport (CC BY-SA 4.0)
+* [https://stackoverflow.com/users/736937/jedwards](jedwards) für Teile der Tabellensortierung (CC BY-SA 4.0)
+* [https://stackoverflow.com/users/782034/nick-grealy](Nick Grealy) für Teile der Tabellensortierung (CC BY-SA 3.0)
