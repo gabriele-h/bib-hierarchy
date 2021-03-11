@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "43ACC_FTW": "Fachhochschule Technikum Wien",
             "43ACC_C02": "FH Campus 02",
             "43ACC_FHJ": "FH Joanneum",
+            "43ACC_FHW": "FHWien der WKW",
             "43ACC_KLK": "Kärntner Landesbibliothek",
             "43ACC_UGL": "Kunstuniversität Linz",
             "43ACC_OOELB": "Landesbibliotheken Oberösterreich",
