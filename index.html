@@ -17,10 +17,10 @@
     </noscript>
     <main role="main" id="main">
         <h1>Hierarchien im Alma des OBV</h1>
-        <form onsubmit="buildHierarchy(acnum, alma_inst_id); return false;">
+        <form onsubmit="buildHierarchy(bibid, alma_inst_id); return false;">
             <fieldset id="input-form">
-                <label for="acnum">AC-Nummer des Kopfsatzes:</label>
-                <input id="acnum" name="acnum" required type="text" value="" pattern="\s?([Aa][Cc])?(?!00000000)[0-9]{8}\s?" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern mit oder ohne AC-Präfix. Haben Sie sich vielleicht vertippt?')" onchange="this.setCustomValidity('')"></input>
+                <label for="bibid">AC-Nummer des Kopfsatzes:</label>
+                <input id="bibid" name="bibid" required type="text" value="" pattern="\s?([Aa][Cc])?(?!00000000)[0-9]{8}\s?" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern mit oder ohne AC-Präfix. Haben Sie sich vielleicht vertippt?')" onchange="this.setCustomValidity('')"></input>
                 <select id="alma-inst-id" name="alma_inst_id" aria-label="Lokalbestand anzeigen für">
                 </select>
                 <input id="submit" name="submit" type="submit" value="Hierarchie anzeigen">

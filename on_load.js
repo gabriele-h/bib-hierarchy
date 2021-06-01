@@ -19,16 +19,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const url = new URL(window.location.href);
         const params = url.searchParams;
         
-        const acnumInput = document.getElementById('acnum');
+        const bibidInput = document.getElementById('bibid');
         const institutionInput = document.getElementById('alma-inst-id');
         const submitButton = document.getElementById('submit');
     
         try {
-            const acnum = params.get('acnum');
+            const bibid = params.get('bibid') || params.get('acnum');
             const instId = params.get('alma_inst_id');
-            if (acnum && instId) {
+            if (bibid && instId) {
                 console.log("Setting form input from URL params.");
-                acnumInput.value = acnum;
+                bibidInput.value = bibid;
                 institutionInput.value = instId;
                 submitButton.click();
             }

@@ -2,31 +2,34 @@
 function buildHierarchy() {
 
     // get and manipulate values from form inputs
-    const acNumInput = document.getElementById("acnum");
-    let acNumInputValue = acNumInput.value;
-    const acNum = acNumInputValue.replace(/\s/g, '').replace(/^([^aA])/, 'AC$1');
-    acNumInput.value = acNum;
+    const bibIdInput = document.getElementById("bibid");
+    let bibIdInputValue = bibIdInput.value;
+    // we allow inputs without the prefix and with whitespaces
+    // the following does some cleanup and prefixing for that
+    const noPrefixRegex = new RegExp('^(?!' + bibIdPrefix + ')(\d+)')
+    const bibId = bibIdInputValue.replace(/\s/g, '').replace(noPrefixRegex, bibIdPrefix + '$2').toUpperCase();
+    bibIdInput.value = bibId;
     const instId = document.getElementById("alma-inst-id").value;
 
     // make vars global where necessary
     let headingForTable;
     let numberOfRecords;
     let records;
-    let titleForHeadAcNum;
+    let titleForHeadBibId;
 
     const params = new URLSearchParams({
-        "ac_num": acNum
+        "bib_id": bibId
     });
     const requestUrl = "./fetchsru.php?" + params;
     const namespace = "http://www.loc.gov/MARC21/slim";
-    const tableId = "bib-hierarchy-"+acNum;
+    const tableId = "bib-hierarchy-"+bibId;
     const csvLinkId = "download-csv";
     const main = document.getElementById("main");
 
     // change the current location in browser's location bar
-    const acNumUri = encodeURI(acNum);
+    const bibIdUri = encodeURI(bibId);
     const instIdUri = encodeURI(instId);
-    history.replaceState(null, null, "?acnum="+acNumUri+"&alma_inst_id="+instIdUri);
+    history.replaceState(null, null, "?bibid="+bibIdUri+"&alma_inst_id="+instIdUri);
     
     // disable input after submit
     const inputForm = document.getElementById("input-form");
@@ -61,39 +64,39 @@ function buildHierarchy() {
     xhr.overrideMimeType('text/xml');
 
     xhr.onload = function() {
-        let modifiedSectionForCurrentAcNum;
-        const sectionForCurrentAcNum = document.createElement("section");
-        sectionForCurrentAcNum.setAttribute("id", acNum);
-        const headingForTableText = "Ausgehend von " + acNum;
+        let modifiedSectionForCurrentBibId;
+        const sectionForCurrentBibId = document.createElement("section");
+        sectionForCurrentBibId.setAttribute("id", bibId);
+        const headingForTableText = "Ausgehend von " + bibId;
         headingForTable = createElementByTagAndText("h2", headingForTableText);
         headingForTable.setAttribute("id", "bib-hierarchy-table-heading");
-        sectionForCurrentAcNum.append(headingForTable);
+        sectionForCurrentBibId.append(headingForTable);
 
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
             const xmlObject = xhr.responseXML;
             numberOfRecords = checkNumberOfRecords(xmlObject);
             if ( numberOfRecords && numberOfRecords > 0 ) {
-                modifiedSectionForCurrentAcNum = createTable(xmlObject, sectionForCurrentAcNum);
+                modifiedSectionForCurrentBibId = createTable(xmlObject, sectionForCurrentBibId);
             } else {
-                const errorP = createElementByTagAndText("p", "Für " + acNum + " wurden keine Datensätze gefunden.");
-                sectionForCurrentAcNum.appendChild(errorP);
+                const errorP = createElementByTagAndText("p", "Für " + bibId + " wurden keine Datensätze gefunden.");
+                sectionForCurrentBibId.appendChild(errorP);
                 loaderIcon.remove();
                 loaderText.remove();
                 inputForm.removeAttribute("disabled");
             }
         } else {
             console.log("Error encountered on call of fetchsru.php");
-            const errorP = createElementByTagAndText("p", "SRU lieferte Fehler für " + acNum);
-            sectionForCurrentAcNum.appendChild(errorP);
+            const errorP = createElementByTagAndText("p", "SRU lieferte Fehler für " + bibId);
+            sectionForCurrentBibId.appendChild(errorP);
         }
 
         try {
-            main.appendChild(modifiedSectionForCurrentAcNum);
+            main.appendChild(modifiedSectionForCurrentBibId);
         } catch (error) {
             //console.log(error);
             console.log("Could not create table.");
         } finally {
-            main.appendChild(sectionForCurrentAcNum);
+            main.appendChild(sectionForCurrentBibId);
         }
 
         if (document.querySelector("tbody")) {
@@ -145,7 +148,7 @@ function buildHierarchy() {
             "Titel des Teils",
             "Erscheinungsjahr",
             "Ausgabebezeichnung",
-            "Netzwerk-ID",
+            networkIdName,
             "Lokalbestand " + instId
         ]
 
@@ -167,7 +170,7 @@ function buildHierarchy() {
             const sectionAddition = " mit " + numDependentRecords + " abhängigen Datensätzen";
             headingForTable.textContent += sectionAddition;
         } else {
-            headingForTable.textContent = "Keine abhängigen Datensätze für " + acNum;
+            headingForTable.textContent = "Keine abhängigen Datensätze für " + bibId;
         }
 
         const tableBody = document.createElement("tbody");
@@ -193,10 +196,10 @@ function buildHierarchy() {
 
             const isbdTitle = buildTitleFromSubfields(partTitle, linkType);
 
-            if (partId.substring(2) == acNum.substring(2)) {
-                titleForHeadAcNum = createElementByTagAndText("p", '"' + isbdTitle + '"');
-                titleForHeadAcNum.setAttribute("id", "title-" + acNum);
-                titleForHeadAcNum.setAttribute("class", "title");
+            if (partId.substring(2) == bibId.substring(2)) {
+                titleForHeadBibId = createElementByTagAndText("p", '"' + isbdTitle + '"');
+                titleForHeadBibId.setAttribute("id", "title-" + bibId);
+                titleForHeadBibId.setAttribute("class", "title");
                 continue;
             }
 
@@ -263,7 +266,7 @@ function buildHierarchy() {
                     continue;
                 }
     
-                if (typeof sfWText !== "undefined" && sfWText.indexOf(acNum) !== -1) {
+                if (typeof sfWText !== "undefined" && sfWText.indexOf(bibId) !== -1) {
                     let xpathSfOrder;
                     if (currentCategoryNumber == 773) {
                         xpathSfOrder = 'default:subfield[@code="q"]/text()';
@@ -386,14 +389,14 @@ function buildHierarchy() {
         }
 
         function extractPartHoldings(recordsXml, currentRecord, nsResolver) {
-            // extract holdings info from marc 852
-            let marc852a;
-            const xpath = 'default:datafield[@tag="852"]/default:subfield[@code="a"]/text()';
+            // extract holdings info from marc datafield
+            let marcPartInstId;
+            const xpath = 'default:datafield[@tag="' + marcPartTag + '"]/default:subfield[@code="' + marcPartSf + '"]/text()';
             const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
             let hasInstHoldings = false;
             try {
-                while ( marc852a = xpathResult.iterateNext().wholeText ) {
-                    if (marc852a == instId) {
+                while ( marcPartInstId = xpathResult.iterateNext().wholeText ) {
+                    if (marcPartInstId == instId) {
                         hasInstHoldings = true;
                     }
                 }
@@ -418,7 +421,7 @@ function buildHierarchy() {
                 sectionElement.append(csvDownloadLink);
             }
 
-            sectionElement.append(titleForHeadAcNum);
+            sectionElement.append(titleForHeadBibId);
 
             if (numberOfRecords > 1) {
                 sectionElement.append(table);

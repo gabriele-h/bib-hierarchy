@@ -1,3 +1,10 @@
+// bib-id specifics
+// NOTE: create_table.js assumes upper-case characters
+// in the bib-id for the match within 773$$w and 830$$w.
+// Search for toUpperCase if you need to change that.
+bibIdPrefix = 'AC';
+
+// List of Institution Codes to use for the holdings-match
 const instCodes = {
     "43ACC_UBW": "Universitätsbibliothek Wien",
     "43ACC_ABP": "Anton Bruckner Privatuniversität",
@@ -38,3 +45,11 @@ const instCodes = {
     "43ACC_WIENB": "Wienbibliothek im Rathaus",
     "43ACC_WUW": "Wirtschaftsuniversität Wien"
 };
+
+// Text of this is matched with the instId to determine
+// whether or not the Bib has holdings in the given Institution
+const marcPartTag = "852";
+const marcPartSf = "a";
+
+// Used as table heading for the Network-ID, e.g. OBV AC-number
+const networkIdName = "Netzwerk-ID";
