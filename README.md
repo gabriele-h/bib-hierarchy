@@ -7,7 +7,7 @@ Die Anzeige von bibliografischen Hierarchien ist in Alma nicht gut möglich. Nac
 
 # Wiederverwendbarkeit
 
-Ab dem Minor-Release v1.1.0 sind alle möglichen Variablen, die für die Situation im OBV spezifisch sind in zwei Dateien übersiedelt: `config.js` und `config.php`. Diese beiden Dateien sind der zentrale Anlaufpunkt, für Anpassungen.
+Ab dem Minor-Release v1.1.0 sind alle möglichen Variablen, die für die Situation im OBV spezifisch sind, in zwei Dateien übersiedelt: `config.js` und `config.php`. Diese beiden Dateien sind der zentrale Anlaufpunkt für Anpassungen.
 
 ## `config.js`
 Hier werden folgende Einstellungen vorgenommen:
@@ -23,7 +23,7 @@ Hier werden folgende Einstellungen vorgenommen:
    * Ein regulärer Ausdruck, um die SRU-Calls auf das Schema der Netzwerk-ID zu beschränken und einen nicht intendierten Gebrauch des Scripts `fetchsru.php` zu verunmöglichen
 
 ## `index.html`
-Neben den Anpassungen in den Konfigurationsdateien müssen auch einige Spezifika im HTML bereinigt werden. Auch hier gibt es einen regulären Ausdruck, der die Eingabe ins Formular auf Validät prüft. Im Hilfetext ist zum Teil von "AC-Nummern" die Rede.
+Neben den Anpassungen in den Konfigurationsdateien müssen auch einige Spezifika im HTML bereinigt werden. Auch hier gibt es einen regulären Ausdruck, der die Eingabe ins Formular auf Validät prüft. Im Hilfetext ist zum Teil von "AC-Nummern" die Rede. Auch das Impressum und die Kontaktmöglichkeit im Footer müsste entsprechend angepasst werden.
 
 ## Kann ich statt NZ/IZ auch IZ/Library abfragen?
 Grundsätzlich sollte das möglich sein. Folgende Schritte sind dafür notwendig:
