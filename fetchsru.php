@@ -1,6 +1,6 @@
 <?php
 /* 
- * Fetch data by "other_system_number" from OBV NZ via SRU
+ * Fetch data by "other_system_number" from Alma IZ or NZ via SRU
  *
  * Data returned is extremely simple with a sructure like so:
  * <records><record>...</record></records>
@@ -8,18 +8,14 @@
  * has the same namespace) and is repeatable.
  */
 
-$baseurl = 'https://eu02.alma.exlibrisgroup.com';
-$urlpath = '/view/sru/';
+include('config.php');
 
-$nzid = "43ACC_NETWORK";
-$acnum = $_GET["ac_num"];
-// $acnum = $_GET["ac_num"] ?? "AC00877586";
-//$acnum = $_GET["ac_num"] ?? "AC03271273";
+$bibid = $_GET["bib_id"] ?? $_GET["ac_num"];
 
-if (!preg_match('/^AC(?!00000000)[0-9]{8}/i',$acnum))
-    exit("Please provide a correct AC-Number.");
+if (!preg_match($bibidregex,$bibid))
+    exit("Please provide a correct ".$bibidname.".");
 
-$querystring = urlencode('other_system_number='.$acnum);
+$querystring = urlencode('other_system_number='.$bibid);
 
 $maximum_records = "50";
 $start_record = "1";
@@ -48,10 +44,10 @@ $records->appendChild($root);
 
 function call_sru($page_start) {
 
-    global $baseurl, $context, $nzid, $urlparams, $urlpath;
+    global $baseurl, $context, $almazoneid, $urlparams, $urlpath;
 
     $urlparams['startRecord'] = $page_start;
-    $url = $baseurl.$urlpath.$nzid."?".http_build_query($urlparams);
+    $url = $baseurl.$urlpath.$almazoneid."?".http_build_query($urlparams);
 
     $sru_xml = new DomDocument();
     $sru_xml->preserveWhiteSpace = false;

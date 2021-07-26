@@ -3,11 +3,12 @@
     <title>BIB HIERARCHY</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    <script src="sort_table.js"></script>
-    <script src="create_table.js"></script>
-    <script src="display_help.js"></script>
-    <script src="on_load.js"></script>
-    <script src="export_table_to_csv.js"></script>
+    <script type="text/javascript" src="sort_table.js"></script>
+    <script type="text/javascript" src="create_table.js"></script>
+    <script type="text/javascript" src="display_help.js"></script>
+    <script type="text/javascript" src="on_load.js"></script>
+    <script type="text/javascript" src="export_table_to_csv.js"></script>
+    <script type="text/javascript" src="config.js"></script>
 </head>
 <body>
     <noscript>
@@ -16,10 +17,10 @@
     </noscript>
     <main role="main" id="main">
         <h1>Hierarchien im Alma des OBV</h1>
-        <form onsubmit="buildHierarchy(acnum, alma_inst_id); return false;">
+        <form onsubmit="buildHierarchy(bibid, alma_inst_id); return false;">
             <fieldset id="input-form">
-                <label for="acnum">AC-Nummer des Kopfsatzes:</label>
-                <input id="acnum" name="acnum" required type="text" value="" pattern="\s?([Aa][Cc])?(?!00000000)[0-9]{8}\s?" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern mit oder ohne AC-Präfix. Haben Sie sich vielleicht vertippt?')" onchange="this.setCustomValidity('')"></input>
+                <label for="bibid">AC-Nummer des Kopfsatzes:</label>
+                <input id="bibid" name="bibid" required type="text" value="" pattern="\s?([Aa][Cc])?(?!00000000)[0-9]{8}\s?" oninvalid="setCustomValidity('Eingabe beschränkt auf AC-Nummern mit oder ohne AC-Präfix. Haben Sie sich vielleicht vertippt?')" onchange="this.setCustomValidity('')"></input>
                 <select id="alma-inst-id" name="alma_inst_id" aria-label="Lokalbestand anzeigen für">
                 </select>
                 <input id="submit" name="submit" type="submit" value="Hierarchie anzeigen">
@@ -38,7 +39,7 @@
                 <li>Titel werden annähernd in ISBD Interpunktion dargestellt, so weit das im Rahmen einer Automatisierung möglich ist</li>
                 <li>Über "CSV Download" kann die Tabelle heruntergeladen werden (Semikolon-getrennt, UTF8)</li>
             </ul>
-            <p class="version">v1.0.2</p>
+            <p class="version">v1.1.0.1</p>
         </div>
     </main>
     <footer id="footer">

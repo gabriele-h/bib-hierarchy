@@ -5,6 +5,32 @@ Anzeige von bibliografischen Hierarchien aus Alma
 
 Die Anzeige von bibliografischen Hierarchien ist in Alma nicht gut möglich. Nachdem die Daten aber da sind, kann man diese Anzeige selbst erstellen, indem man sich die MARC-Records über die SRU-Schnittstelle von Alma holt.
 
+# Wiederverwendbarkeit
+
+Ab dem Minor-Release v1.1.0 sind alle möglichen Variablen, die für die Situation im OBV spezifisch sind, in zwei Dateien übersiedelt: `config.js` und `config.php`. Diese beiden Dateien sind der zentrale Anlaufpunkt für Anpassungen.
+
+## `config.js`
+Hier werden folgende Einstellungen vorgenommen:
+   * Das Präfix der Netzwerk-ID (z. B. "AC" für die AC-Nummern des OBV)
+   * Eine Liste der Institution-Codes
+   * Die MARC-Kategorie und das zugehörige Subfeld, das abgefragt wird, um das Vorhandensein von Holdings zu prüfen.
+   * Die Bezeichnung der Netzwerk-ID in der Tabellenansicht
+
+## `config.php`
+Hier werden folgende Einstellungen vorgenommen:
+   * Variablen, die für die SRU-Calls notwendig sind
+   * Die Bezeichnung der Netzwerk-ID für Fehlermeldungen der SRU-Calls
+   * Ein regulärer Ausdruck, um die SRU-Calls auf das Schema der Netzwerk-ID zu beschränken und einen nicht intendierten Gebrauch des Scripts `fetchsru.php` zu verunmöglichen
+
+## `index.html`
+Neben den Anpassungen in den Konfigurationsdateien müssen auch einige Spezifika im HTML bereinigt werden. Auch hier gibt es einen regulären Ausdruck, der die Eingabe ins Formular auf Validät prüft. Im Hilfetext ist zum Teil von "AC-Nummern" die Rede. Auch das Impressum und die Kontaktmöglichkeit im Footer müsste entsprechend angepasst werden.
+
+## Kann ich statt NZ/IZ auch IZ/Library abfragen?
+Grundsätzlich sollte das möglich sein. Folgende Schritte sind dafür notwendig:
+   * In `config.php` müsste als `$almazoneid` die entsprechende Alma-Institution-ID angegeben werden
+   * In `config.js` müsste statt der InstCodes die LibraryCodes angegeben werden
+   * In `config.js` müsste unter `marcPartTag` der Wert `AVA` angegeben werden und unter `marcPartSf` der Wert `b`
+
 # Technisches
 Diese Implementierung basiert sehr stark auf jener von [Stefan Schuh](https://github.com/schuach/bib-hierarchy).
 

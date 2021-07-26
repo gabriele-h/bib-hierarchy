@@ -5,47 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     contact();
 
     function createInstCodesDropdown() {
-        var instCodes = {
-            "43ACC_UBW": "Universitätsbibliothek Wien",
-            "43ACC_ABP": "Anton Bruckner Privatuniversität",
-            "43ACC_AKW": "Arbeiterkammerbibliothek Wien",
-            "43ACC_BMA": "Bundesministerium für europäische und internationale Angelegenheiten",
-            "43ACC_GDFS": "Campusbibliotheken St. Pölten",
-            "43ACC_DLI": "Diözesanbibliothek Linz",
-            "43ACC_DBSBG": "Diözesanbibliothek Salzburg im Archiv der Erzdiözese Salzburg",
-            "43ACC_DBGK": "Diözese Gurk-Klagenfurt, Diözesanbibliothek",
-            "43ACC_DSP": "Diözese St. Pölten",
-            "43ACC_FHB": "Fachhochschule Burgenland",
-            "43ACC_BFI": "Fachhochschule des BFI Wien",
-            "43ACC_FTW": "Fachhochschule Technikum Wien",
-            "43ACC_C02": "FH Campus 02",
-            "43ACC_FHJ": "FH Joanneum",
-            "43ACC_FHW": "FHWien der WKW",
-            "43ACC_KLK": "Kärntner Landesbibliothek",
-            "43ACC_UGL": "Kunstuniversität Linz",
-            "43ACC_OOELB": "Landesbibliotheken Oberösterreich",
-            "43ACC_MUV": "MODUL University Vienna",
-            "43ACC_NDU": "New Design University",
-            "43ACC_OEAW": "Österreichische Akademie der Wissenschaften",
-            "43ACC_ONB": "Österreichische Nationalbibliothek",
-            "43ACC_SLA": "Salzburger Landesarchiv",
-            "43ACC_SFP": "Sigmund-Freud-Privatstiftung",
-            "43ACC_STFTHLGKR_BIB": "Stiftsbibliothek Heiligenkreuz",
-            "43ACC_TUG": "Technische Universität Graz",
-            "43ACC_TUW": "TU Wien",
-            "43ACC_UBBW": "Universitätsbibliothek Bodenkultur Wien",
-            "43ACC_UBG": "Universitätsbibliothek Graz",
-            "43ACC_UBI": "Universitätsbibliothek Innsbruck",
-            "43ACC_UBK": "Universitätsbibliothek Klagenfurt",
-            "43ACC_UBL": "Universitätsbibliothek Linz",
-            "43ACC_UBMS": "Universitätsbibliothek Mozarteum Salzburg",
-            "43ACC_UBS": "Universitätsbibliothek Salzburg",
-            "43ACC_VBK": "Verbund für Bildung und Kultur",
-            "43ACC_VUW": "Veterinärmedizinische Universität Wien",
-            "43ACC_WIENB": "Wienbibliothek im Rathaus",
-            "43ACC_WUW": "Wirtschaftsuniversität Wien"
-        };
-        
         for (inst in instCodes) {
             var option = document.createElement("option");
             var optionText = document.createTextNode(instCodes[inst]);
@@ -60,16 +19,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const url = new URL(window.location.href);
         const params = url.searchParams;
         
-        const acnumInput = document.getElementById('acnum');
+        const bibidInput = document.getElementById('bibid');
         const institutionInput = document.getElementById('alma-inst-id');
         const submitButton = document.getElementById('submit');
     
         try {
-            const acnum = params.get('acnum');
+            const bibid = params.get('bibid') || params.get('acnum');
             const instId = params.get('alma_inst_id');
-            if (acnum && instId) {
+            if (bibid && instId) {
                 console.log("Setting form input from URL params.");
-                acnumInput.value = acnum;
+                bibidInput.value = bibid;
                 institutionInput.value = instId;
                 submitButton.click();
             }
