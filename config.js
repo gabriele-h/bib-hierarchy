@@ -22,6 +22,7 @@ const instCodes = {
     "43ACC_C02": "FH Campus 02",
     "43ACC_FHJ": "FH Joanneum",
     "43ACC_FKU": "FH Kufstein Tirol",
+    "43ACC_FHOO": "FH Oberösterreich",
     "43ACC_FHW": "FHWien der WKW",
     "43ACC_KLK": "Kärntner Landesbibliothek",
     "43ACC_UGL": "Kunstuniversität Linz",
