@@ -87,6 +87,8 @@ function buildHierarchy() {
         } else {
             console.log("Error encountered on call of fetchsru.php");
             const errorP = createElementByTagAndText("p", "SRU lieferte Fehler für " + bibId);
+            loaderIcon.remove();
+            loaderText.remove();
             sectionForCurrentBibId.appendChild(errorP);
         }
 
