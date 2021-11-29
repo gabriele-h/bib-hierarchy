@@ -335,9 +335,6 @@ function buildHierarchy() {
 
         function buildTitleFromSubfields(subfields, linkType, isDublette) {
             let title = "";
-            if (isDublette) {
-                title = "[DUBLETTE] ";
-            }
             for (let i = 0; i < subfields.length; i ++) {
 
                 const subfield = subfields[i];
@@ -362,6 +359,10 @@ function buildHierarchy() {
                     }
                     title += subfieldValue;
                 }
+            }
+
+            if (isDublette) {
+                title = "[DUBLETTE] " + title;
             }
 
             return title;
