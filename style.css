@@ -164,6 +164,7 @@ tbody tr:nth-child(even) {
   background-color: black;
   color: white;
   font-weight: bold;
+}
 
 .has-holdings td:last-child {
   background-color: #A9EFBF;
