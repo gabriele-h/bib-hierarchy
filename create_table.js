@@ -415,7 +415,7 @@ function buildHierarchy() {
             // extract info on whether record is a "Dublette"
             let datafield970;
             let dublettenCheck = new RegExp('.*dublette.*', 'i');
-            const xpath = 'default:datafield[@tag="970"]/default:subfield[@ind1="0"][@ind2=" "]/text()';
+            const xpath = 'default:datafield[@tag="970"][@ind1="0"][@ind2=" "]/default:subfield/text()';
             const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
             try {
                 while ( datafield970 = xpathResult.iterateNext().wholeText ) {
