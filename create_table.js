@@ -195,6 +195,7 @@ function buildHierarchy() {
             const partEdition = extractPartEdition(recordsXml, currentRecord, nsResolver);
             const partId = extractPartId(recordsXml, currentRecord, nsResolver);
             const partHoldings = extractPartHoldings(recordsXml, currentRecord, nsResolver);
+            const isDublette = extractDublette(recordsXml, currentRecord, nsResolver);
 
             const isbdTitle = buildTitleFromSubfields(partTitle, linkType);
 
@@ -222,20 +223,23 @@ function buildHierarchy() {
                 currentTr.setAttribute("class", "has-no-holdings");
             }
 
-            appendTableDataToRow(partOrder, currentTr);
-            appendTableDataToRow(linkType, currentTr);
-            appendTableDataToRow(isbdTitle, currentTr);
-            appendTableDataToRow(partYear, currentTr);
-            appendTableDataToRow(partEdition, currentTr);
-            appendTableDataToRow(partId, currentTr);
-            appendTableDataToRow(hasInstHoldings, currentTr);
+            appendTableDataToRow(partOrder, currentTr, false);
+            appendTableDataToRow(linkType, currentTr, false);
+            appendTableDataToRow(isbdTitle, currentTr, isDublette);
+            appendTableDataToRow(partYear, currentTr, false);
+            appendTableDataToRow(partEdition, currentTr, false);
+            appendTableDataToRow(partId, currentTr, false);
+            appendTableDataToRow(hasInstHoldings, currentTr, false);
 
             tableBody.appendChild(currentTr);
             table.appendChild(tableBody);
         }
 
-        function appendTableDataToRow(tdText, tableRow) {
+        function appendTableDataToRow(tdText, tableRow, cssClass) {
             const td = createElementByTagAndText('td', tdText);
+            if (cssClass) {
+                td.setAttribute("class", cssClass);
+            }
             tableRow.appendChild(td);
         }
 
@@ -406,8 +410,24 @@ function buildHierarchy() {
             }
             return hasInstHoldings;
         }
-            
-    }    
+
+        function extractDublette(recordsXml, currentRecord, nsResolver) {
+            // extract info on whether record is a "Dublette"
+            let datafield970;
+            let dublettenCheck = new RegExp('.*dublette.*', 'i');
+            const xpath = 'default:datafield[@tag="970"]/default:subfield[@ind1="0"][ind2=" "]/text()';
+            const xpathResult = recordsXml.evaluate(xpath, currentRecord, nsResolver);
+            try {
+                while ( datafield970 = xpathResult.iterateNext().wholeText ) {
+                    if ( dublettenCheck.test(datafield970) == true ) {
+                        return "dublette";
+                    }
+                }
+            } catch {
+            }
+            return false;
+        }
+    }
 
     function createTable(recordsXml, sectionElement) {
         console.log("Creating table…");

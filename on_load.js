@@ -2,7 +2,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     createInstCodesDropdown();
     loadFormWithUrlParams();
-    contact();
+    try {
+        contact();
+    } catch {
+        console.log('No contact info found.');
+    }
 
     function createInstCodesDropdown() {
         for (inst in instCodes) {

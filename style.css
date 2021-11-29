@@ -160,6 +160,11 @@ tbody tr:nth-child(even) {
   content: "\00A0\25B2";
 }
 
+.dublette {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+
 .has-holdings td:last-child {
   background-color: #A9EFBF;
 }
