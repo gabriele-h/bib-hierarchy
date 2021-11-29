@@ -420,6 +420,7 @@ function buildHierarchy() {
             try {
                 while ( datafield970 = xpathResult.iterateNext().wholeText ) {
                     if ( dublettenCheck.test(datafield970) == true ) {
+                        console.log("Dublette found.");
                         return "dublette";
                     }
                 }
