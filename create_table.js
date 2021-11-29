@@ -425,6 +425,7 @@ function buildHierarchy() {
                     }
                 }
             } catch {
+                console.log("Something went wrong during Dublettencheck.");
             }
             return false;
         }
