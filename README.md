@@ -48,6 +48,10 @@ Code-Teile, die anderen Lizenzen unterliegen, werden mit einem entsprechenden
 Kommentar eingeleitet, der sowohl die Autor\*innen als auch Kürzel der und Link
 zur Lizenz beinhaltet.
 
+# Neuerungen in den Versionen
+* 1.1.0 - Config in eigener Datei
+* 1.1.1 - Markierung von Dubletten (siehe Issue#4)
+
 # Autor\*innen
 * Gabriele Höfler, die die vorliegende Version umgesetzt hat
 * [Stefan Schuh](https://github.com/schuach/bib-hierarchy/), von dem die komplette Konzeption abgeschaut ist (GPL-3.0)
