@@ -197,7 +197,7 @@ function buildHierarchy() {
             const partHoldings = extractPartHoldings(recordsXml, currentRecord, nsResolver);
             const isDublette = extractDublette(recordsXml, currentRecord, nsResolver);
 
-            const isbdTitle = buildTitleFromSubfields(partTitle, linkType);
+            const isbdTitle = buildTitleFromSubfields(partTitle, linkType, isDublette);
 
             if (partId.substring(2) == bibId.substring(2)) {
                 titleForHeadBibId = createElementByTagAndText("p", '"' + isbdTitle + '"');
@@ -333,8 +333,11 @@ function buildHierarchy() {
             return subfields;
         }
 
-        function buildTitleFromSubfields(subfields, linkType) {
+        function buildTitleFromSubfields(subfields, linkType, isDublette) {
             let title = "";
+            if (isDublette) {
+                title = "[DUBLETTE] ";
+            }
             for (let i = 0; i < subfields.length; i ++) {
 
                 const subfield = subfields[i];
@@ -425,7 +428,6 @@ function buildHierarchy() {
                     }
                 }
             } catch {
-                console.log("Something went wrong during Dublettencheck.");
             }
             return false;
         }
